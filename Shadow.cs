@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PLayer : CharacterBody2D
+public partial class Shadow : CharacterBody2D
 {
     private Vector2 velocity = Vector2.Zero;
     private float gravity = 2000.0f; // Adjust to control the gravity strength
@@ -9,59 +9,53 @@ public partial class PLayer : CharacterBody2D
     private float Speed = 300.0f; // Adjust to control the jump strength
     private int jumpsRemaining = 2; // Number of double jumps allowed
     private bool isJumping = false;
-    public bool ShadowControlled { get; set; } = false;
-
+    public bool FinishFall { get; set; } = false;
+    public bool IsAutonamous { get; set; } = false;
     private Vector2 _direction = Vector2.Zero;
-
+    public Vector2 ParentVelocity { get; set; } = Vector2.Zero;
     private AnimatedSprite2D animator;
-    private bool _isAttacking = false;
 
-
+    
+    public void SetDirection(Vector2 direction)
+    {
+        _direction = direction;
+    }
+    
     public Vector2 GetDirection()
     {
         return _direction;
     }
 
+    
     public override void _Ready()
     {
-        animator = GetNode<AnimatedSprite2D>("PlayerCol/Player");
+        animator = GetNode<AnimatedSprite2D>("ShadowCol/ShadowSprite");
         animator.Play("idle");
     }
 
     public void Calc(double delta)
     {
-        velocity = Velocity;
-        ApplyGravity(delta);
-
-        if (!ShadowControlled)
+        if (IsAutonamous || FinishFall)
         {
+            velocity = Velocity;
+            ApplyGravity(delta);
             ProcessInput(delta);
+            Velocity = velocity;
         }
-
-        Velocity = velocity;
+        else
+        {
+            Velocity = ParentVelocity;
+        }
     }
 
     public void Animate()
     {
-        // play attack animation, when animation finishes set _isAttacking to false
-        if (_isAttacking)
-        {
-            animator.Play("attack");
-
-            // get current frame
-            if (animator.Frame == 4)
-            {
-                _isAttacking = false;
-            }
-
-            return;
-        }
-
-        if (velocity.Y != 0)
+        
+        if (_direction.Y != 0)
         {
             animator.Play("run");
         }
-        else if (velocity.X != 0)
+        else if (_direction.X != 0)
         {
             animator.Play("run");
         }
@@ -70,13 +64,15 @@ public partial class PLayer : CharacterBody2D
             animator.Play("idle");
         }
 
-        if (velocity.X < 0)
+        if (_direction.X < 0)
         {
             animator.FlipH = true;
+            animator.Position = new Vector2(8, animator.Position.Y);
         }
-        else if (velocity.X > 0)
+        else if (_direction.X > 0)
         {
             animator.FlipH = false;
+            animator.Position = new Vector2(-4, animator.Position.Y);
         }
     }
 
@@ -87,6 +83,7 @@ public partial class PLayer : CharacterBody2D
             // Reset jumps when on the ground or ceiling
             isJumping = false;
             jumpsRemaining = 2;
+            FinishFall = false;
             velocity.X = (Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left")) * Speed;
             _direction.X = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
         }
@@ -107,11 +104,6 @@ public partial class PLayer : CharacterBody2D
             velocity.Y = jumpForce;
             isJumping = true;
             jumpsRemaining--;
-        }
-
-        if (Input.IsActionJustPressed("attack"))
-        {
-            _isAttacking = true;
         }
     }
 

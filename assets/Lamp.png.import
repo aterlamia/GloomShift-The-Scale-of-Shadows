@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7i61twb0v8wi"
-path="res://.godot/imported/Idle-Sheet.png-259cf1c07a28dc640c25ac2d3b4b2a9b.ctex"
+uid="uid://bn720n1d8802"
+path="res://.godot/imported/Lamp.png-b10c161930e15a5ee1f17e3309314618.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Idle-Sheet.png"
-dest_files=["res://.godot/imported/Idle-Sheet.png-259cf1c07a28dc640c25ac2d3b4b2a9b.ctex"]
+source_file="res://assets/Lamp.png"
+dest_files=["res://.godot/imported/Lamp.png-b10c161930e15a5ee1f17e3309314618.ctex"]
 
 [params]
 
