@@ -14,8 +14,9 @@ public partial class Shadow : CharacterBody2D
     private Vector2 _direction = Vector2.Zero;
     public Vector2 ParentVelocity { get; set; } = Vector2.Zero;
     private AnimatedSprite2D animator;
+    private bool _isAttacking = false;
 
-    
+
     public void SetDirection(Vector2 direction)
     {
         _direction = direction;
@@ -50,7 +51,20 @@ public partial class Shadow : CharacterBody2D
 
     public void Animate()
     {
-        
+        // play attack animation, when animation finishes set _isAttacking to false
+        if (_isAttacking)
+        {
+            animator.Play("attack");
+
+            // get current frame
+            if (animator.Frame == 4)
+            {
+                _isAttacking = false;
+            }
+
+            return;
+        }
+
         if (_direction.Y != 0)
         {
             animator.Play("run");
@@ -104,6 +118,10 @@ public partial class Shadow : CharacterBody2D
             velocity.Y = jumpForce;
             isJumping = true;
             jumpsRemaining--;
+        }
+        if (Input.IsActionJustPressed("attack"))
+        {
+            _isAttacking = true;
         }
     }
 
