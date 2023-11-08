@@ -9,6 +9,7 @@ public partial class PLayer : CharacterBody2D
     private float Speed = 300.0f; // Adjust to control the jump strength
     private int jumpsRemaining = 2; // Number of double jumps allowed
     private bool isJumping = false;
+    private Area2D _attackHitPoint;
     public bool ShadowControlled { get; set; } = false;
 
     private Vector2 _direction = Vector2.Zero;
@@ -26,6 +27,7 @@ public partial class PLayer : CharacterBody2D
     {
         animator = GetNode<AnimatedSprite2D>("PlayerCol/Player");
         animator.Play("idle");
+        _attackHitPoint = GetNode<Area2D>("Sword");
     }
 
     public void Calc(double delta)
@@ -49,9 +51,18 @@ public partial class PLayer : CharacterBody2D
             animator.Play("attack");
 
             // get current frame
-            if (animator.Frame == 4)
+            if (animator.Frame == 0)
+            {
+                
+            }
+            else if (animator.Frame == 3)
+            {
+                _attackHitPoint.Monitoring = true;
+            }
+            else if (animator.Frame == 4)
             {
                 _isAttacking = false;
+                _attackHitPoint.Monitoring = false;
             }
 
             return;
@@ -69,20 +80,28 @@ public partial class PLayer : CharacterBody2D
         {
             animator.Play("idle");
         }
-
-        if (velocity.X < 0)
-        {
-            animator.FlipH = true;
-        }
-        else if (velocity.X > 0)
-        {
-            animator.FlipH = false;
-        }
     }
 
+
+    private void changeDir()
+    {
+        if (_direction.X < 0)
+        {
+            animator.FlipH = true;
+            GetNode<Sword>("Sword").Position = new Vector2(MathF.Abs(GetNode<Sword>("Sword").Position.X )* -1,
+                GetNode<Sword>("Sword").Position.Y);
+        }
+        else if (_direction.X > 0)
+        {
+            animator.FlipH = false;
+            GetNode<Sword>("Sword").Position = new Vector2(MathF.Abs(GetNode<Sword>("Sword").Position.X) ,
+                GetNode<Sword>("Sword").Position.Y);
+        }
+    }
     private void ProcessInput(double delta)
     {
-        if (IsOnFloor() || IsOnCeiling() || _direction.X == 0)
+        var curDir = _direction.X;
+        if (IsOnFloor() || IsOnCeiling() || _direction.X == 0)  
         {
             // Reset jumps when on the ground or ceiling
             isJumping = false;
@@ -112,6 +131,11 @@ public partial class PLayer : CharacterBody2D
         if (Input.IsActionJustPressed("attack"))
         {
             _isAttacking = true;
+        }
+
+        if (curDir != _direction.X)
+        {
+            changeDir();
         }
     }
 

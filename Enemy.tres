@@ -1,6 +1,35 @@
-[gd_resource type="SpriteFrames" load_steps=10 format=3 uid="uid://bkr2gprxorp7d"]
+[gd_resource type="SpriteFrames" load_steps=18 format=3 uid="uid://bkr2gprxorp7d"]
 
 [ext_resource type="Texture2D" uid="uid://c3oh2q0kavbqe" path="res://assets/enemywalk.png" id="1_s7stu"]
+[ext_resource type="Texture2D" uid="uid://cx8cddhrwj4pq" path="res://assets/enemyattack.png" id="1_tl7ye"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f515p"]
+atlas = ExtResource("1_tl7ye")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0rni"]
+atlas = ExtResource("1_tl7ye")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8452t"]
+atlas = ExtResource("1_tl7ye")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10gf3"]
+atlas = ExtResource("1_tl7ye")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73xet"]
+atlas = ExtResource("1_tl7ye")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0q083"]
+atlas = ExtResource("1_tl7ye")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hhxn"]
+atlas = ExtResource("1_s7stu")
+region = Rect2(0, 0, 128, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lb3at"]
 atlas = ExtResource("1_s7stu")
@@ -36,6 +65,37 @@ region = Rect2(896, 0, 128, 128)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f515p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0rni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8452t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10gf3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73xet")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0q083")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3hhxn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_lb3at")

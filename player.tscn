@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cggbckprr8pns"]
+
+[ext_resource type="Script" path="res://PLayer.cs" id="1_7fjsr"]
+[ext_resource type="SpriteFrames" uid="uid://cn2m3mlm7y4sl" path="res://CharacterAnim.tres" id="2_f33q7"]
+[ext_resource type="Script" path="res://Sword.cs" id="2_jw025"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eqicq"]
+height = 56.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bdd26"]
+radius = 12.0
+height = 40.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7yhe4"]
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(222, 298)
+script = ExtResource("1_7fjsr")
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(2, -27)
+zoom = Vector2(2.5, 2.5)
+position_smoothing_enabled = true
+
+[node name="Sword" type="Area2D" parent="."]
+position = Vector2(26, 0)
+collision_layer = 4
+collision_mask = 4
+monitoring = false
+script = ExtResource("2_jw025")
+
+[node name="AttackHitPoint" type="CollisionShape2D" parent="Sword"]
+shape = SubResource("CapsuleShape2D_eqicq")
+debug_color = Color(0.372549, 0.0823529, 0, 0.419608)
+metadata/_edit_lock_ = true
+
+[node name="PlayerCol" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_bdd26")
+
+[node name="Player" type="AnimatedSprite2D" parent="PlayerCol"]
+material = SubResource("ShaderMaterial_7yhe4")
+position = Vector2(1, 2)
+scale = Vector2(0.495, 0.495)
+sprite_frames = ExtResource("2_f33q7")
+animation = &"attack"
+frame = 3
+
+[connection signal="body_entered" from="Sword" to="Sword" method="_on_attack_hit_point_body_entered"]
