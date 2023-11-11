@@ -1,7 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bmybtgwicopg6"]
 
-[ext_resource type="Texture2D" uid="uid://bn720n1d8802" path="res://assets/Lamp.png" id="1_ex653"]
+[ext_resource type="Texture2D" uid="uid://dnty3e87kqiua" path="res://assets/Lantern.png" id="1_w61f8"]
 [ext_resource type="Script" path="res://Light.cs" id="2_yrj1e"]
+[ext_resource type="Texture2D" uid="uid://gsdkeo18v1iu" path="res://assets/lighttexture.png" id="3_3wlxc"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mjwmd"]
 particles_animation = true
@@ -9,28 +10,27 @@ particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_n28q7"]
-blend_mode = 3
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xymek"]
+size = Vector2(409, 102)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_foxla"]
-
-[node name="Light" type="Sprite2D"]
-material = SubResource("CanvasItemMaterial_mjwmd")
-use_parent_material = true
-position = Vector2(-8, -27)
-texture = ExtResource("1_ex653")
+[node name="Light" type="Node2D"]
 script = ExtResource("2_yrj1e")
 
-[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
-visible = false
-material = SubResource("CanvasItemMaterial_n28q7")
-position = Vector2(5, -23)
-energy = 2.34
-range_z_min = -20
-range_z_max = 20
-shadow_color = Color(0.321569, 0.152941, 0, 0)
-height = 0.9
-max_distance = 20.0
+[node name="Light" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_mjwmd")
+use_parent_material = true
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_w61f8")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = SubResource("CanvasTexture_foxla")
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = ExtResource("3_3wlxc")
+
+[node name="lightray" type="Area2D" parent="." groups=["light"]]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lightray"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_xymek")
+
+[connection signal="area_entered" from="lightray" to="." method="_on_lightray_area_entered"]

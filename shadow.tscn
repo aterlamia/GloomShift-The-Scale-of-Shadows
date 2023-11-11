@@ -1,13 +1,25 @@
-[gd_scene load_steps=39 format=3 uid="uid://cggbckprr8pns"]
+[gd_scene load_steps=42 format=3 uid="uid://b72cbab4oa0vn"]
 
-[ext_resource type="Script" path="res://PLayer.cs" id="1_7fjsr"]
-[ext_resource type="Texture2D" uid="uid://cwgwr12aqwktq" path="res://assets/jump.png" id="2_0side"]
-[ext_resource type="Texture2D" uid="uid://d3kb1ovvv53tr" path="res://assets/land.png" id="2_7wcu3"]
-[ext_resource type="Texture2D" uid="uid://cid57fp0cto8k" path="res://assets/irun.png" id="2_51c2f"]
-[ext_resource type="Texture2D" uid="uid://dapymy4n5yawd" path="res://assets/attack.png" id="2_jannv"]
-[ext_resource type="Script" path="res://Sword.cs" id="2_jw025"]
-[ext_resource type="Script" path="res://StateManager.cs" id="4_46stf"]
-[ext_resource type="Texture2D" uid="uid://ba20mrwkl67kd" path="res://assets/idle.png" id="5_bsttw"]
+[ext_resource type="Script" path="res://Shadow.cs" id="1_16rog"]
+[ext_resource type="Texture2D" uid="uid://dapymy4n5yawd" path="res://assets/attack.png" id="2_3pnul"]
+[ext_resource type="Shader" path="res://shadow.gdshader" id="2_6jt4p"]
+[ext_resource type="Script" path="res://Sword.cs" id="3_r7kc4"]
+[ext_resource type="Script" path="res://StateManager.cs" id="4_ex07l"]
+[ext_resource type="Texture2D" uid="uid://ba20mrwkl67kd" path="res://assets/idle.png" id="5_v4psn"]
+[ext_resource type="Texture2D" uid="uid://cid57fp0cto8k" path="res://assets/irun.png" id="6_6wwmv"]
+[ext_resource type="Texture2D" uid="uid://cwgwr12aqwktq" path="res://assets/jump.png" id="7_xpp2w"]
+[ext_resource type="Texture2D" uid="uid://d3kb1ovvv53tr" path="res://assets/land.png" id="8_o8tmc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bwngg"]
+shader = ExtResource("2_6jt4p")
+shader_parameter/max_line_width = 3.0
+shader_parameter/min_line_width = 1.0
+shader_parameter/freq = 10.0
+shader_parameter/block_size = 2.0
+shader_parameter/outline_colour = Vector4(0.4, 0.4, 0.4, 0.8)
+shader_parameter/_min = 1.0
+shader_parameter/_max = 10.0
+shader_parameter/color = Vector4(3, 3, 0, 0.5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eqicq"]
 height = 56.0
@@ -45,7 +57,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_jannv")]
+"values": [ExtResource("2_3pnul")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -113,7 +125,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_0side")]
+"values": [ExtResource("7_xpp2w")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -155,7 +167,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("5_bsttw")]
+"values": [ExtResource("5_v4psn")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -196,7 +208,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_0side")]
+"values": [ExtResource("7_xpp2w")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -237,7 +249,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_7wcu3")]
+"values": [ExtResource("8_o8tmc")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -279,7 +291,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("2_51c2f")]
+"values": [ExtResource("6_6wwmv")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -389,12 +401,18 @@ states/move/position = Vector2(478.667, 189.333)
 transitions = ["Start", "move", SubResource("AnimationNodeStateMachineTransition_0t4rb"), "move", "jump_start", SubResource("AnimationNodeStateMachineTransition_vfjb6"), "jump_start", "falling", SubResource("AnimationNodeStateMachineTransition_g5127"), "falling", "land", SubResource("AnimationNodeStateMachineTransition_n74dx"), "move", "falling", SubResource("AnimationNodeStateMachineTransition_x4m33"), "jump_start", "double_jump", SubResource("AnimationNodeStateMachineTransition_6bos8"), "double_jump", "falling", SubResource("AnimationNodeStateMachineTransition_n16cn"), "land", "move", SubResource("AnimationNodeStateMachineTransition_i5ndl"), "move", "attack", SubResource("AnimationNodeStateMachineTransition_yye84"), "attack", "move", SubResource("AnimationNodeStateMachineTransition_k3lhw")]
 graph_offset = Vector2(-245, -133)
 
-[node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_7fjsr")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_powe4"]
+size = Vector2(20, 40.5)
+
+[node name="Shadow" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_16rog")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_bwngg")
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_jannv")
+texture = ExtResource("2_3pnul")
 hframes = 5
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -404,22 +422,22 @@ position_smoothing_speed = 10.0
 
 [node name="Sword" type="Area2D" parent="."]
 position = Vector2(26, 0)
-collision_layer = 4
-collision_mask = 4
+collision_layer = 8
+collision_mask = 8
 monitoring = false
-script = ExtResource("2_jw025")
+script = ExtResource("3_r7kc4")
 
 [node name="AttackHitPoint" type="CollisionShape2D" parent="Sword"]
 shape = SubResource("CapsuleShape2D_eqicq")
 debug_color = Color(0.372549, 0.0823529, 0, 0.419608)
 metadata/_edit_lock_ = true
 
-[node name="PlayerCol" type="CollisionShape2D" parent="."]
+[node name="ShadowCol" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_bdd26")
 
 [node name="StateManager" type="Node" parent="."]
-script = ExtResource("4_46stf")
-stateManagerName = "Player state manager"
+script = ExtResource("4_ex07l")
+stateManagerName = "Shadow State Manager"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -435,4 +453,12 @@ tree_root = SubResource("AnimationNodeStateMachine_eqmek")
 anim_player = NodePath("../AnimationPlayer")
 parameters/move/blend_position = -0.999132
 
+[node name="LightDetector" type="Area2D" parent="." groups=["light"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LightDetector"]
+position = Vector2(0, -0.25)
+shape = SubResource("RectangleShape2D_powe4")
+
 [connection signal="body_entered" from="Sword" to="Sword" method="_on_attack_hit_point_body_entered"]
+[connection signal="area_entered" from="LightDetector" to="." method="_on_light_detector_area_entered"]
+[connection signal="body_exited" from="LightDetector" to="." method="_on_light_detector_body_exited"]

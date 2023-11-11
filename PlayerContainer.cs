@@ -6,6 +6,7 @@ public partial class PlayerContainer : Node2D
     public Boolean IsShadow = false;
 
     private Shadow _shadow;
+    private Sprite2D _shadowSprite;
     private PLayer _pLayer;
     private AnimationPlayer _animationPlayer;
     private Camera2D _cameraPLayer;
@@ -23,6 +24,7 @@ public partial class PlayerContainer : Node2D
     public override void _Ready()
     {
         _shadow = GetNode<Shadow>("Shadow");
+        _shadowSprite = _shadow.GetNode<Sprite2D>("Sprite2D");
         _pLayer = GetNode<PLayer>("Player");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _cameraPLayer = GetNode<Camera2D>("Player/Camera");
@@ -42,7 +44,7 @@ public partial class PlayerContainer : Node2D
         }
     }
 
-private Vector2 getDirection()
+    private Vector2 GetDirection()
     {
         if (IsShadow)
         {
@@ -56,43 +58,35 @@ private Vector2 getDirection()
 
     public override void _PhysicsProcess(double delta)
     {
-        _pLayer.Calc(delta);
-
-        if (IsShadow)
+        if (!IsShadow)
         {
-            _shadow.IsAutonamous = true;
-            _pLayer.ShadowControlled = true;
-        }
-        else
-        {
-            _shadow.IsAutonamous = false;
-            _pLayer.ShadowControlled = false;
+            _pLayer.Calc(delta);
+            _pLayer.MoveAndSlide();
 
-            if (_pLayer.IsOnFloor() && !_shadow.IsOnFloor())
+            _shadow.Position = _pLayer.Position + new Vector2(-10 * _pLayer.GetDirection().X, 0);
+
+            if (_pLayer.GetDirection().X == 0)
             {
+                _shadow.Scale = new Vector2(1.1f, 1.1f);
             }
             else
             {
-                _shadow.ParentVelocity = _pLayer.Velocity;
+                _shadow.Scale = new Vector2(1, 1);
             }
 
-            _shadow.SetDirection(_pLayer.GetDirection());
+            _shadow.Velocity = _pLayer.Velocity;
+            _shadow.ParentControl(delta, _pLayer.GetDirection());
+            _shadow.MoveAndSlide();
         }
-
-        _shadow.Calc(delta);
-        _shadow.Animate();
-        _shadow.MoveAndSlide();
-        _pLayer.Animate();
-        _pLayer.MoveAndSlide();
+        else
+        {
+            _shadow.Calc(delta);
+            _shadow.MoveAndSlide();
+        }
 
         HandleShadowMovement();
         HandleLightDetection();
-
-
-        _currentDirection = getDirection();
-
-        // if the current direction is to the right, lerp the camamera 50 px to the right
-         
+        _currentDirection = GetDirection();
         HandleCameraMovement();
     }
 
@@ -101,11 +95,11 @@ private Vector2 getDirection()
         var cam = _activeCam();
         if (_currentDirection.X > 0)
         {
-            cam.Offset = new Vector2(Mathf.Lerp(cam.Offset.X, 200, 0.01f), Mathf.Lerp(cam.Offset.Y, -50, 0.01f));
+            cam.Offset = new Vector2(Mathf.Lerp(cam.Offset.X, 80, 0.01f), Mathf.Lerp(cam.Offset.Y, -5, 0.01f));
         }
         else if (_currentDirection.X < 0)
         {
-            cam.Offset = new Vector2(Mathf.Lerp(cam.Offset.X, -200, 0.01f), Mathf.Lerp(cam.Offset.Y, -50, 0.01f));
+            cam.Offset = new Vector2(Mathf.Lerp(cam.Offset.X, -80, 0.01f), Mathf.Lerp(cam.Offset.Y, -5, 0.01f));
         }
         else
         {
@@ -121,17 +115,17 @@ private Vector2 getDirection()
     {
         // get the Lights node and determine if the player is within a certain distance of one of the lights
         var lights = GetTree().Root.GetNode<Node2D>("Game/Level/Lights");
-        _shadow.GetNode<AnimatedSprite2D>("ShadowCol/ShadowSprite").Material.Set("shader_parameter/max_line_width", 6);
-        _shadow.GetNode<AnimatedSprite2D>("ShadowCol/ShadowSprite").Material.Set("shader_parameter/outline_colour",
+        _shadowSprite.Material.Set("shader_parameter/max_line_width", 6);
+        _shadowSprite.Material.Set("shader_parameter/outline_colour",
             new Vector4(0.4f, 0.4f, 0.4f, 0.3f));
         // loop over all lights and determine the distance. if at least one light is close enough get out of the loop
         foreach (Node2D l in lights.GetChildren())
         {
-            if (l.Position.DistanceTo(_pLayer.Position) < 100)
+            if (l.GlobalPosition.DistanceTo(_pLayer.GlobalPosition) < 100)
             {
-                _shadow.GetNode<AnimatedSprite2D>("ShadowCol/ShadowSprite").Material
+                _shadowSprite.Material
                     .Set("shader_parameter/max_line_width", 9);
-                _shadow.GetNode<AnimatedSprite2D>("ShadowCol/ShadowSprite").Material
+                _shadowSprite.Material
                     .Set("shader_parameter/outline_colour", new Vector4(0.7f, 0, 0, 0.3f));
                 break;
             }
@@ -142,16 +136,40 @@ private Vector2 getDirection()
     {
         if (IsShadow)
         {
-            //The further the shadow is away from the player the smaller it gets
-            var dist = _pLayer.Position.DistanceTo(_shadow.Position);
-
-            var scale = dist / 1000.0f;
-            if (scale > 0.5f)
+            if (_shadow.LightDetector != null)
             {
-                scale = 0.5f;
+                var distanceToPole = _shadow.LightDetector.GetParent<Node2D>().GlobalPosition
+                    .DistanceTo(_shadow.GlobalPosition);
+                
+                // Get the height and width of the area2d take the middle of it and calculate the triangle from the top of the middle to the bottom rigth
+                // and bottom left
+                var shape = _shadow.LightDetector.GetNode<CollisionShape2D>("CollisionShape2D");
+                var shadowHeight = _shadow.GetNode<CollisionShape2D>("LightDetector/CollisionShape2D").Shape.GetRect().Size.Y;
+                var height = shape.Shape.GetRect().Size.Y;
+                var width = shape.Shape.GetRect().Size.X;
+                var bottom = width / 2;
+                var hypothenuse = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(bottom, 2));
+                var angle = Math.Asin(height / hypothenuse);
+                var adjecent = bottom - distanceToPole;
+                
+                //calulate the opposide based on the angle and the adjecent
+                var opposite = Math.Tan(angle) * adjecent;
+                var scale = opposite / shadowHeight;
+                _shadow.Scale = new Vector2(Mathf.Min((float)scale,1), Mathf.Min((float)scale,1));
+
+
             }
 
-            _shadow.Scale = new Vector2(1.0f - scale, 1.0f - scale);
+            //The further the shadow is away from the player the smaller it gets
+            // var dist = _pLayer.Position.DistanceTo(_shadow.Position);
+            //
+            // var scale = dist / 1000.0f;
+            // if (scale > 0.5f)
+            // {
+            //     scale = 0.5f;
+            // }
+            //
+            // _shadow.Scale = new Vector2(1.0f - scale, 1.0f - scale);
         }
     }
 
@@ -171,7 +189,7 @@ private Vector2 getDirection()
                     _cameraShadow.Offset = _cameraPLayer.Offset;
                 }
 
-                _cameraPLayer.Offset = Vector2.Zero;    
+                _cameraPLayer.Offset = Vector2.Zero;
             }
             else
             {

@@ -1,32 +1,15 @@
-[gd_scene load_steps=19 format=3 uid="uid://dgvqb77dp7wx"]
+[gd_scene load_steps=15 format=3 uid="uid://dgvqb77dp7wx"]
 
 [ext_resource type="TileSet" uid="uid://bbvvie5bphjnr" path="res://TileSet.tres" id="1_solsn"]
-[ext_resource type="Script" path="res://Shadow.cs" id="2_30lnj"]
 [ext_resource type="Script" path="res://PlayerContainer.cs" id="2_brcy7"]
 [ext_resource type="Script" path="res://Switch1.cs" id="2_jd74y"]
-[ext_resource type="SpriteFrames" uid="uid://cn2m3mlm7y4sl" path="res://CharacterAnim.tres" id="2_x2bge"]
-[ext_resource type="Shader" path="res://shadow.gdshader" id="5_a7o1d"]
+[ext_resource type="PackedScene" uid="uid://b72cbab4oa0vn" path="res://shadow.tscn" id="4_2h4bx"]
 [ext_resource type="PackedScene" uid="uid://cggbckprr8pns" path="res://player.tscn" id="7_jriah"]
 [ext_resource type="PackedScene" uid="uid://bmybtgwicopg6" path="res://lamp.tscn" id="7_ks8w6"]
 [ext_resource type="PackedScene" uid="uid://c8fce55820o2l" path="res://enemy.tscn" id="9_cdmyl"]
 [ext_resource type="AudioStream" uid="uid://b57lwkybip5u6" path="res://assets/music/music.mp3" id="10_l82fq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7nyc5"]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bdd26"]
-radius = 12.0
-height = 40.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_f057x"]
-shader = ExtResource("5_a7o1d")
-shader_parameter/max_line_width = 6.0
-shader_parameter/min_line_width = 0.0
-shader_parameter/freq = 6.0
-shader_parameter/block_size = 2.0
-shader_parameter/outline_colour = Vector4(0.7, 0.1, 0.1, 0.3)
-shader_parameter/_min = 2.0
-shader_parameter/_max = 3.0
-shader_parameter/color = Vector4(0.2, 0.2, 0.2, 0.5)
 
 [sub_resource type="Animation" id="Animation_mdwm6"]
 resource_name = "move_left"
@@ -164,32 +147,11 @@ shape = SubResource("RectangleShape2D_7nyc5")
 position = Vector2(-336, -3)
 script = ExtResource("2_brcy7")
 
-[node name="Shadow" type="CharacterBody2D" parent="Level/PlayerContainer"]
-position = Vector2(229, 297)
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("2_30lnj")
-
-[node name="Camera" type="Camera2D" parent="Level/PlayerContainer/Shadow"]
-position = Vector2(-8, -27)
-enabled = false
-zoom = Vector2(2.5, 2.5)
-position_smoothing_enabled = true
-
-[node name="ShadowCol" type="CollisionShape2D" parent="Level/PlayerContainer/Shadow"]
-position = Vector2(-7, 2)
-shape = SubResource("CapsuleShape2D_bdd26")
-
-[node name="ShadowSprite" type="AnimatedSprite2D" parent="Level/PlayerContainer/Shadow/ShadowCol"]
-modulate = Color(0, 0, 0, 0.223529)
-self_modulate = Color(0, 0, 0, 1)
-material = SubResource("ShaderMaterial_f057x")
-position = Vector2(-3, 1)
-scale = Vector2(0.495, 0.495)
-sprite_frames = ExtResource("2_x2bge")
-animation = &"attack"
+[node name="Shadow" parent="Level/PlayerContainer" instance=ExtResource("4_2h4bx")]
+position = Vector2(218, 298)
 
 [node name="Player" parent="Level/PlayerContainer" instance=ExtResource("7_jriah")]
+position = Vector2(222, 297)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Level/PlayerContainer"]
 root_node = NodePath("../Player/Camera")
@@ -198,7 +160,7 @@ libraries = {
 }
 
 [node name="Lights" type="Node2D" parent="Level"]
-position = Vector2(486, 78)
+position = Vector2(481, 58)
 
 [node name="Lamp" parent="Level/Lights" instance=ExtResource("7_ks8w6")]
 position = Vector2(633, 209)

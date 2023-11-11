@@ -3,36 +3,34 @@ using System;
 
 public partial class PLayer : CharacterBody2D
 {
-    private Vector2 velocity = Vector2.Zero;
-    private float gravity = 2000.0f; // Adjust to control the gravity strength
-    private float jumpForce = -590.0f; // Adjust to control the jump strength
-    private float Speed = 300.0f; // Adjust to control the jump strength
-    private int jumpsRemaining = 2; // Number of double jumps allowed
-    private bool isJumping = false;
+    protected Vector2 LocalVelocity = Vector2.Zero;
+    protected float Gravity = 980.0f;
+    protected float Speed = 400.0f;
     private Area2D _attackHitPoint;
+    protected AnimationTree AnimationTree;
+    protected Sprite2D Sprite;
+    protected StateManager StateManager;
     public bool ShadowControlled { get; set; } = false;
 
-    private Vector2 _direction = Vector2.Zero;
-
-    private AnimatedSprite2D animator;
-    private bool _isAttacking = false;
-
+    protected Vector2 Direction = Vector2.Zero;
 
     public Vector2 GetDirection()
     {
-        return _direction;
+        return Direction;
     }
 
     public override void _Ready()
     {
-        animator = GetNode<AnimatedSprite2D>("PlayerCol/Player");
-        animator.Play("idle");
+        AnimationTree = GetNode<AnimationTree>("AnimationTree");
         _attackHitPoint = GetNode<Area2D>("Sword");
+        Sprite = GetNode<Sprite2D>("Sprite2D");
+        AnimationTree.Active = true;
+        StateManager = GetNode<StateManager>("StateManager");
     }
 
-    public void Calc(double delta)
+    public virtual void Calc(double delta)
     {
-        velocity = Velocity;
+        LocalVelocity = Velocity;
         ApplyGravity(delta);
 
         if (!ShadowControlled)
@@ -40,114 +38,48 @@ public partial class PLayer : CharacterBody2D
             ProcessInput(delta);
         }
 
-        Velocity = velocity;
+        Velocity = LocalVelocity;
+        AnimationTree.Set("parameters/move/blend_position", Direction.X);
     }
 
-    public void Animate()
+    protected void ChangeDir()
     {
-        // play attack animation, when animation finishes set _isAttacking to false
-        if (_isAttacking)
+        if (Direction.X < 0)
         {
-            animator.Play("attack");
-
-            // get current frame
-            if (animator.Frame == 0)
-            {
-                
-            }
-            else if (animator.Frame == 3)
-            {
-                _attackHitPoint.Monitoring = true;
-            }
-            else if (animator.Frame == 4)
-            {
-                _isAttacking = false;
-                _attackHitPoint.Monitoring = false;
-            }
-
-            return;
-        }
-
-        if (velocity.Y != 0)
-        {
-            animator.Play("run");
-        }
-        else if (velocity.X != 0)
-        {
-            animator.Play("run");
-        }
-        else
-        {
-            animator.Play("idle");
-        }
-    }
-
-
-    private void changeDir()
-    {
-        if (_direction.X < 0)
-        {
-            animator.FlipH = true;
-            GetNode<Sword>("Sword").Position = new Vector2(MathF.Abs(GetNode<Sword>("Sword").Position.X )* -1,
+            Sprite.FlipH = true;
+            GetNode<Sword>("Sword").Position = new Vector2(MathF.Abs(GetNode<Sword>("Sword").Position.X) * -1,
                 GetNode<Sword>("Sword").Position.Y);
         }
-        else if (_direction.X > 0)
+        else if (Direction.X > 0)
         {
-            animator.FlipH = false;
-            GetNode<Sword>("Sword").Position = new Vector2(MathF.Abs(GetNode<Sword>("Sword").Position.X) ,
+            Sprite.FlipH = false;
+            GetNode<Sword>("Sword").Position = new Vector2(
+                MathF.Abs(GetNode<Sword>("Sword").Position.X),
                 GetNode<Sword>("Sword").Position.Y);
         }
     }
-    private void ProcessInput(double delta)
+
+    protected virtual void ProcessInput(double delta)
     {
-        var curDir = _direction.X;
-        if (IsOnFloor() || IsOnCeiling() || _direction.X == 0)  
+        var curDir = Direction.X;
+        if ((IsOnFloor() || Direction.X == 0) && StateManager.CanMove())
         {
-            // Reset jumps when on the ground or ceiling
-            isJumping = false;
-            jumpsRemaining = 2;
-            velocity.X = (Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left")) * Speed;
-            _direction.X = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
-        }
-        else
-        {
-            Vector2 tempdirection =
-                new Vector2(Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left"), 0);
+            LocalVelocity.X = (Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left")) * Speed;
+            Direction.X = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");
 
-            if (tempdirection.X != 0 && tempdirection.X != _direction.X)
-            {
-                // damp velocity x to 0
-                velocity.X = Mathf.Lerp(velocity.X, 0, 3f * (float)delta);
-            }
+          
         }
-
-        if (Input.IsActionJustPressed("jump") && jumpsRemaining > 0)
+        if (curDir != Direction.X)
         {
-            velocity.Y = jumpForce;
-            isJumping = true;
-            jumpsRemaining--;
-        }
-
-        if (Input.IsActionJustPressed("attack"))
-        {
-            _isAttacking = true;
-        }
-
-        if (curDir != _direction.X)
-        {
-            changeDir();
+            ChangeDir();
         }
     }
 
-    private void ApplyGravity(double delta)
+    public virtual void ApplyGravity(double delta)
     {
-        if (IsOnFloor() || IsOnCeiling())
+        if (!IsOnFloor())
         {
-            velocity.Y = 0;
-        }
-        else
-        {
-            velocity.Y += gravity * (float)delta;
+            LocalVelocity.Y += Gravity * (float)delta;
         }
     }
 }
