@@ -4,5 +4,6 @@ public enum StateTypes
 {
     Air,
     Ground,
-    Attack
+    Attack,
+    Hit,
 }

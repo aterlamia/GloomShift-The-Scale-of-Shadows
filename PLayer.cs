@@ -5,7 +5,7 @@ public partial class PLayer : CharacterBody2D
 {
     protected Vector2 LocalVelocity = Vector2.Zero;
     protected float Gravity = 980.0f;
-    protected float Speed = 400.0f;
+    protected float Speed = 300.0f;
     private Area2D _attackHitPoint;
     protected AnimationTree AnimationTree;
     protected Sprite2D Sprite;
@@ -62,7 +62,7 @@ public partial class PLayer : CharacterBody2D
     protected virtual void ProcessInput(double delta)
     {
         var curDir = Direction.X;
-        if ((IsOnFloor() || Direction.X == 0) && StateManager.CanMove())
+        if ( StateManager.CanMove())
         {
             LocalVelocity.X = (Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left")) * Speed;
             Direction.X = Input.GetActionStrength("move_right") - Input.GetActionStrength("move_left");

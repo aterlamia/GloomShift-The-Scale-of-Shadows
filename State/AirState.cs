@@ -4,7 +4,7 @@ namespace GenericPlatforformer.State;
 
 public class AirState : State
 {
-    private readonly float _jumpForce = -400.0f;
+    private readonly float _jumpForce = -300.0f;
     private bool _hasDoubleJumped = false;
 
     public AirState(PLayer player, AnimationNodeStateMachinePlayback playback, bool canMove) : base(player, playback,

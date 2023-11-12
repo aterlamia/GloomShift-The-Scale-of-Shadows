@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using GenericPlatforformer.Enemy;
 
 public partial class DamageHandler : Node2D
 {
