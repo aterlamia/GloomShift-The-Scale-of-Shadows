@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5vnqfy2xhkg3"]
+
+[ext_resource type="Texture2D" uid="uid://bb4e1x8tyuxii" path="res://assets/ui/hearthfull.png" id="1_tsf81"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Hearth1" type="AspectRatioContainer" parent="."]
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 1161.0
+offset_bottom = 658.0
+scale = Vector2(0.0182909, 0.0221206)
+
+[node name="Hearth1" type="TextureRect" parent="Hearth1"]
+layout_mode = 2
+texture = ExtResource("1_tsf81")
+
+[node name="Hearth2" type="AspectRatioContainer" parent="."]
+offset_left = 23.0
+offset_top = 10.0
+offset_right = 1175.0
+offset_bottom = 658.0
+scale = Vector2(0.0182909, 0.0221206)
+
+[node name="Hearth1" type="TextureRect" parent="Hearth2"]
+layout_mode = 2
+texture = ExtResource("1_tsf81")
+
+[node name="Hearth3" type="AspectRatioContainer" parent="."]
+offset_left = 37.0
+offset_top = 10.0
+offset_right = 1189.0
+offset_bottom = 658.0
+scale = Vector2(0.0182909, 0.0221206)
+
+[node name="Hearth1" type="TextureRect" parent="Hearth3"]
+layout_mode = 2
+texture = ExtResource("1_tsf81")
+
+[node name="Hearth4" type="AspectRatioContainer" parent="."]
+offset_left = 51.0
+offset_top = 10.0
+offset_right = 1203.0
+offset_bottom = 658.0
+scale = Vector2(0.0182909, 0.0221206)
+
+[node name="Hearth1" type="TextureRect" parent="Hearth4"]
+layout_mode = 2
+texture = ExtResource("1_tsf81")
