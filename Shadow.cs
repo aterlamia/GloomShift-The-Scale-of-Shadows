@@ -78,7 +78,7 @@ public partial class Shadow : PLayer
 
     public void _on_light_detector_area_entered(Node2D area)
     {
-        if (area.IsInGroup("light"))
+        if (area.Name == "LightArea")
         {
             LightDetector = area;
         }
@@ -86,7 +86,7 @@ public partial class Shadow : PLayer
 
     public void _on_light_detector_body_exited(Node2D area)
     {
-        if (area.IsInGroup("light"))
+        if (area.Name == "LightArea")
         {
             LightDetector = null;
         }

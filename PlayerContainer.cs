@@ -141,9 +141,7 @@ public partial class PlayerContainer : Node2D
                 var distanceToPole = _shadow.LightDetector.GetParent<Node2D>().GlobalPosition
                     .DistanceTo(_shadow.GlobalPosition);
                 
-                // Get the height and width of the area2d take the middle of it and calculate the triangle from the top of the middle to the bottom rigth
-                // and bottom left
-                var shape = _shadow.LightDetector.GetNode<CollisionShape2D>("CollisionShape2D");
+                var shape = _shadow.LightDetector.GetNode<CollisionShape2D>("Shape");
                 var shadowHeight = _shadow.GetNode<CollisionShape2D>("LightDetector/CollisionShape2D").Shape.GetRect().Size.Y;
                 var height = shape.Shape.GetRect().Size.Y;
                 var width = shape.Shape.GetRect().Size.X;

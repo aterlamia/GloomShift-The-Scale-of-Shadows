@@ -37,7 +37,7 @@ public partial class Light : Node2D
 
     private void createLight()
     {
-        var lightDetector = GetNode<CollisionShape2D>("Area/Shape");
+        var lightDetector = GetNode<CollisionShape2D>("LightArea/Shape");
         GD.Print("hier");
         if (lightDetector == null)
         {

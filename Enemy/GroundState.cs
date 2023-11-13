@@ -103,6 +103,10 @@ public class GroundState: EnemyState
      
     }
 
+    public override void Enter()
+    {
+        Enemy.MoveSpeed = _moveSpeed;
+    }
 
     public GroundState(Enemy enemy, PLayer pLayer, AnimationNodeStateMachinePlayback playback, bool canMove) : base(enemy,pLayer, playback, canMove)
     {

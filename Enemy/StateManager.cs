@@ -29,6 +29,9 @@ public partial class StateManager : Node
 			case StateTypes.Attack:
 				stateName = "attack";
 				break;
+			case StateTypes.Hit:
+				stateName = "hit";
+				break;
 			default:
 				GD.Print("Unknown state type");
 				break;
@@ -54,6 +57,7 @@ public partial class StateManager : Node
 			
 		AvailableStates.Add("ground", new GroundState(_enemy,_player, _playback, true));
 		AvailableStates.Add("attack", new AttackState(_enemy, _player,_playback, false, 5.0f));
+		AvailableStates.Add("hit", new HitState(_enemy, _player,_playback, false));
 		
 		ChangeState(StateTypes.Ground);
 	}

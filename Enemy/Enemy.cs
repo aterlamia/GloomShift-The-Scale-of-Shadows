@@ -1,12 +1,13 @@
 using Godot;
 using System;
+using GenericPlatforformer.State;
 
 namespace GenericPlatforformer.Enemy;
 
 public partial class Enemy : CharacterBody2D
 {
     private Vector2 velocity = Vector2.Zero;
-    private float moveSpeed = 100.0f;
+    public float MoveSpeed { get; set; } = 100.0f;
     private bool isMovingRight = true;
     private float gravity = 2000.0f; // Adjust to control the gravity strength
     private float jumpForce = -590.0f; // Adjust to control the jump strength
@@ -21,8 +22,9 @@ public partial class Enemy : CharacterBody2D
 
     public void wasHit()
     {
-        GD.Print(isMovingRight);
-        velocity = new Vector2(isMovingRight ? 120 : -120, -120);
+        var stateMachine = GetNode<StateManager>("StateManager");
+        stateMachine.ChangeState(StateTypes.Hit);
+
     }
 
     public override void _Ready()

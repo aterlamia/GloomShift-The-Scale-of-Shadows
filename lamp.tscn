@@ -10,7 +10,7 @@ particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ys5w"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpe3r"]
 size = Vector2(600, 104)
 
 [node name="Light" type="Node2D"]
@@ -34,12 +34,12 @@ texture = ExtResource("2_o7cci")
 [node name="PointLight2D" type="PointLight2D" parent="."]
 texture = ExtResource("3_3wlxc")
 
-[node name="Area" type="Area2D" parent="." groups=["light"]]
+[node name="LightArea" type="Area2D" parent="."]
 collision_layer = 3
 collision_mask = 3
 
-[node name="Shape" type="CollisionShape2D" parent="Area"]
+[node name="Shape" type="CollisionShape2D" parent="LightArea"]
 position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_2ys5w")
+shape = SubResource("RectangleShape2D_bpe3r")
 
-[connection signal="area_entered" from="Area" to="." method="_on_lightray_area_entered"]
+[connection signal="area_entered" from="LightArea" to="." method="_on_lightray_area_entered"]

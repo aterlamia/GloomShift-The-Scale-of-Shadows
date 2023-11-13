@@ -163,7 +163,7 @@ position = Vector2(481, 59)
 
 [node name="Lamp" parent="Level/Lights" instance=ExtResource("7_ks8w6")]
 position = Vector2(982, 209)
-LightWidth = 100.0
+LightWidth = 200.0
 
 [node name="Start" type="Node2D" parent="Level"]
 
@@ -212,18 +212,15 @@ position = Vector2(2057, 307)
 position = Vector2(7, -146.5)
 shape = SubResource("RectangleShape2D_0htv8")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("10_l82fq")
-volume_db = 6.474
-pitch_scale = 0.6
-autoplay = true
-attenuation = 0.615572
-panning_strength = 1.11
-
 [node name="Enemy" parent="." instance=ExtResource("9_cdmyl")]
 position = Vector2(77, 233)
 
 [node name="Ui" parent="." instance=ExtResource("13_aomlj")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_l82fq")
+pitch_scale = 0.79
+autoplay = true
 
 [connection signal="area_entered" from="Level/TileMap/Switch1" to="Level/TileMap/Switch1" method="_on_body_entered"]
 [connection signal="body_entered" from="Level/TileMap/Switch1" to="Level/TileMap/Switch1" method="_on_body_entered"]
