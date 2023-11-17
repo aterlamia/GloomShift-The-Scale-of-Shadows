@@ -7,7 +7,7 @@ public class AttackState : State
     private float _damage = 5.0f;
     
 
-    public AttackState(PLayer player, AnimationNodeStateMachinePlayback playback, bool canMove, float damage) : base(player, playback,
+    public AttackState(Player player, AnimationNodeStateMachinePlayback playback, bool canMove, float damage) : base(player, playback,
         canMove)
     {
         _damage = damage;

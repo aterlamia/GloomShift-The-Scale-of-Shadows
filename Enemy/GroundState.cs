@@ -108,7 +108,7 @@ public class GroundState: EnemyState
         Enemy.MoveSpeed = _moveSpeed;
     }
 
-    public GroundState(Enemy enemy, PLayer pLayer, AnimationNodeStateMachinePlayback playback, bool canMove) : base(enemy,pLayer, playback, canMove)
+    public GroundState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, bool canMove) : base(enemy,player, playback, canMove)
     {
     }
 }

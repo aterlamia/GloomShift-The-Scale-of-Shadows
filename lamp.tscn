@@ -10,7 +10,7 @@ particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpe3r"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qgc6m"]
 size = Vector2(600, 104)
 
 [node name="Light" type="Node2D"]
@@ -40,6 +40,6 @@ collision_mask = 3
 
 [node name="Shape" type="CollisionShape2D" parent="LightArea"]
 position = Vector2(-0.5, 0)
-shape = SubResource("RectangleShape2D_bpe3r")
+shape = SubResource("RectangleShape2D_qgc6m")
 
 [connection signal="area_entered" from="LightArea" to="." method="_on_lightray_area_entered"]

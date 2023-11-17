@@ -12,14 +12,13 @@ public class HitState: EnemyState
     private float timeSinceLastAttack = 0.0f;
     private bool canAttack = true;
     private float _moveSpeed = 1000.0f;
-    private float pushBackForce = 40.0f;
+    private float pushBackForce = 20.0f;
     public override void ProcessState(double delta)
     {
         float distanceToPlayer = Enemy.GlobalPosition.DistanceTo(Player.GlobalPosition);
 
         if (distanceToPlayer <= pushBackForce)
         {
-            GD.Print(Enemy.Direction);
             var velocity = Enemy.Direction * -1 * _moveSpeed;
             Enemy.Velocity = velocity;
             Enemy.MoveAndSlide();
@@ -33,7 +32,7 @@ public class HitState: EnemyState
     }
 
 
-    public HitState(Enemy enemy, PLayer pLayer, AnimationNodeStateMachinePlayback playback, bool canMove) : base(enemy,pLayer, playback, canMove)
+    public HitState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, bool canMove) : base(enemy,player, playback, canMove)
     {
     }
     

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Shadow : PLayer
+public partial class Shadow : Player
 {
     protected float Speed = 100.0f;
     private Vector2 velocity = Vector2.Zero;
@@ -22,6 +22,12 @@ public partial class Shadow : PLayer
     }
 
 
+    private void wasHit(int damage)
+    {
+        GD.Print("The shadow was hit for " + damage + " damage");
+        
+    }
+    
     public override void Calc(double delta)
     {
         var curDir = Direction.X;

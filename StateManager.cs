@@ -12,7 +12,7 @@ public partial class StateManager : Node
 	public State CurrentState { get; private set; }
 
 	
-	private PLayer _player = null;
+	private Player _player = null;
 	private AnimationTree _animationTree = null;
 	private AnimationNodeStateMachinePlayback _playback = null;
 	public void ChangeState(StateTypes state)
@@ -33,7 +33,6 @@ public partial class StateManager : Node
 				GD.Print("Unknown state type");
 				break;
 		}
-		GD.Print(stateManagerName + " = " + stateName);
 		if (CurrentState != null)
 		{
 			CurrentState.NextState = null;
@@ -47,8 +46,7 @@ public partial class StateManager : Node
 	public Dictionary<string, State> AvailableStates = new Dictionary<string, State>();
 	public override void _Ready()
 	{
-		GD.Print(stateManagerName + " = Starting" );
-		_player = GetParent<PLayer>();
+		_player = GetParent<Player>();
 		_animationTree = _player.GetNode<AnimationTree>("AnimationTree");
 		_playback = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
 			

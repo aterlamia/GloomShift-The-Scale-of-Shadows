@@ -1,7 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://dgvqb77dp7wx"]
+[gd_scene load_steps=22 format=3 uid="uid://dgvqb77dp7wx"]
 
+[ext_resource type="Script" path="res://LootSpawner.cs" id="1_0wd2j"]
 [ext_resource type="TileSet" uid="uid://bbvvie5bphjnr" path="res://TileSet.tres" id="1_solsn"]
 [ext_resource type="Script" path="res://PlayerContainer.cs" id="2_brcy7"]
+[ext_resource type="PackedScene" uid="uid://ygsw0meoa5ky" path="res://loot_scale.tscn" id="2_brpm1"]
 [ext_resource type="Script" path="res://Switch1.cs" id="2_jd74y"]
 [ext_resource type="PackedScene" uid="uid://b72cbab4oa0vn" path="res://shadow.tscn" id="4_2h4bx"]
 [ext_resource type="PackedScene" uid="uid://cggbckprr8pns" path="res://player.tscn" id="7_jriah"]
@@ -84,9 +86,6 @@ _data = {
 "return_right": SubResource("Animation_aw0te")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0htv8"]
-size = Vector2(34, 313)
-
 [node name="Game" type="Node2D"]
 
 [node name="Level" type="Node2D" parent="."]
@@ -142,29 +141,6 @@ script = ExtResource("2_jd74y")
 position = Vector2(2171, 303)
 shape = SubResource("RectangleShape2D_7nyc5")
 
-[node name="PlayerContainer" type="Node2D" parent="Level"]
-position = Vector2(-336, -3)
-script = ExtResource("2_brcy7")
-
-[node name="Shadow" parent="Level/PlayerContainer" instance=ExtResource("4_2h4bx")]
-position = Vector2(218, 298)
-
-[node name="Player" parent="Level/PlayerContainer" groups=["Player"] instance=ExtResource("7_jriah")]
-position = Vector2(223, 297)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Level/PlayerContainer"]
-root_node = NodePath("../Player/Camera")
-libraries = {
-"": SubResource("AnimationLibrary_egooo")
-}
-
-[node name="Lights" type="Node2D" parent="Level"]
-position = Vector2(481, 59)
-
-[node name="Lamp" parent="Level/Lights" instance=ExtResource("7_ks8w6")]
-position = Vector2(982, 209)
-LightWidth = 200.0
-
 [node name="Start" type="Node2D" parent="Level"]
 
 [node name="Qkey" type="Sprite2D" parent="Level/Start"]
@@ -204,16 +180,46 @@ offset_right = 2611.0
 offset_bottom = -72.0
 text = "To Attack"
 
-[node name="Ladder" type="Area2D" parent="Level"]
-visible = false
-position = Vector2(2057, 307)
+[node name="PlayerContainer" type="Node2D" parent="Level"]
+position = Vector2(-336, -3)
+script = ExtResource("2_brcy7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Ladder"]
-position = Vector2(7, -146.5)
-shape = SubResource("RectangleShape2D_0htv8")
+[node name="Shadow" parent="Level/PlayerContainer" instance=ExtResource("4_2h4bx")]
+position = Vector2(218, 298)
 
-[node name="Enemy" parent="." instance=ExtResource("9_cdmyl")]
-position = Vector2(77, 233)
+[node name="Player" parent="Level/PlayerContainer" groups=["Player"] instance=ExtResource("7_jriah")]
+position = Vector2(223, 297)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Level/PlayerContainer"]
+root_node = NodePath("../Player/Camera")
+libraries = {
+"": SubResource("AnimationLibrary_egooo")
+}
+
+[node name="Lights" type="Node2D" parent="Level"]
+position = Vector2(481, 59)
+
+[node name="Lamp" parent="Level/Lights" instance=ExtResource("7_ks8w6")]
+position = Vector2(982, 209)
+LightWidth = 200.0
+
+[node name="Enemy" parent="Level" instance=ExtResource("9_cdmyl")]
+position = Vector2(2960, 272)
+
+[node name="Enemy2" parent="Level" instance=ExtResource("9_cdmyl")]
+position = Vector2(1736, 54)
+
+[node name="Enemy3" parent="Level" instance=ExtResource("9_cdmyl")]
+position = Vector2(1964, -44)
+
+[node name="Enemy4" parent="Level" instance=ExtResource("9_cdmyl")]
+position = Vector2(1033, 90)
+
+[node name="LootSpawner" type="Node2D" parent="."]
+script = ExtResource("1_0wd2j")
+LootScenes = {
+"Scale": ExtResource("2_brpm1")
+}
 
 [node name="Ui" parent="." instance=ExtResource("13_aomlj")]
 

@@ -30,7 +30,7 @@ public class GroundState: State
         _playback.Travel("move");
     }
 
-    public GroundState(PLayer player, AnimationNodeStateMachinePlayback playback, bool canMove) : base(player, playback, canMove)
+    public GroundState(Player player, AnimationNodeStateMachinePlayback playback, bool canMove) : base(player, playback, canMove)
     {
     }
 }

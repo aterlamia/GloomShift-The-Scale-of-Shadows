@@ -15,9 +15,25 @@ public partial class StateManager : Node
 
 	
 	private Enemy _enemy = null;
-	private PLayer _player = null;
+	private Player _player = null;
 	private AnimationTree _animationTree = null;
 	private AnimationNodeStateMachinePlayback _playback = null;
+
+	public void CheckHealthAndSwitch()
+	{
+		var damageHandler = _enemy.GetNode<DamageHandler>("DamageHandler");
+		if (damageHandler.Health <= 0)
+		{
+			damageHandler.Die();
+		}
+		else
+		{
+			ChangeState(StateTypes.Ground);
+		}
+
+	}
+	
+	// Make this listeb to signals
 	public void ChangeState(StateTypes state)
 	{
 		var stateName = "ground"; // sane fallback
@@ -31,6 +47,9 @@ public partial class StateManager : Node
 				break;
 			case StateTypes.Hit:
 				stateName = "hit";
+				break;
+			case StateTypes.Die:
+				stateName = "die";
 				break;
 			default:
 				GD.Print("Unknown state type");
@@ -50,7 +69,7 @@ public partial class StateManager : Node
 	public Dictionary<string, EnemyState> AvailableStates = new Dictionary<string, EnemyState>();
 	public override void _Ready()
 	{
-		_player = GetTree().GetFirstNodeInGroup("Player") as PLayer;
+		_player = GetTree().GetFirstNodeInGroup("Player") as Player;
 		_enemy = GetParent<Enemy>();
 		_animationTree = _enemy.GetNode<AnimationTree>("AnimationTree");
 		_playback = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
@@ -58,6 +77,7 @@ public partial class StateManager : Node
 		AvailableStates.Add("ground", new GroundState(_enemy,_player, _playback, true));
 		AvailableStates.Add("attack", new AttackState(_enemy, _player,_playback, false, 5.0f));
 		AvailableStates.Add("hit", new HitState(_enemy, _player,_playback, false));
+		AvailableStates.Add("die", new DieState(_enemy, _player,_playback, false));
 		
 		ChangeState(StateTypes.Ground);
 	}

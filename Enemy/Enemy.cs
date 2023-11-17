@@ -24,9 +24,13 @@ public partial class Enemy : CharacterBody2D
     {
         var stateMachine = GetNode<StateManager>("StateManager");
         stateMachine.ChangeState(StateTypes.Hit);
-
     }
 
+    public void spawnLoot()
+    {
+        GetNode<GlobalState>("/root/GlobalState").SpawnLootAtPos(LootTypes.Scale, GlobalPosition);
+    }
+    
     public override void _Ready()
     {
         AnimationTree = GetNode<AnimationTree>("AnimationTree");
@@ -69,56 +73,9 @@ public partial class Enemy : CharacterBody2D
         }
     }
 
-    // private void MoveEnemy()
-    // {
-    //     if (!inAttackRange())
-    //     {
-    //         velocity.X = isMovingRight ? moveSpeed : -moveSpeed;
-    //     }
-    //
-    //     Velocity = velocity;
-    //     MoveAndSlide();
-    //
-    //     if (IsOnWall() && !inAttackRange())
-    //     {
-    //         isMovingRight = !isMovingRight;
-    //     }
-    // }
-
-
-    // Called in every frame.
-    public override void _Process(double delta)
+    public void _on_attack_body_entered(Node2D body)
     {
-        // if (!canAttack)
-        // {
-        //     // Update the attack cooldown
-        //     timeSinceLastAttack += (float)delta;
-        //     if (timeSinceLastAttack >= attackCooldown)
-        //     {
-        //         canAttack = true;
-        //     }
-        // }
-    }
-
-    public void _on_attack_hit_point_area_entered(Area2D body)
-    {
-        // var parent = body.GetParent();
-        //
-        // GD.Print(parent);
-        // if (parent is Enemy)
-        // {
-        //     GD.Print("hit enemy");
-        //     body.QueueFree();
-        // }
-    }
-
-    public void _on_attack_hit_point_body_entered(Node2D body)
-    {
-        // GD.Print(body);
-    }
-
-    public void _on_attack_area_entered(Node2D body)
-    {
-        GD.Print(body);
+        GD.Print("Hit: " + body.Name);
+        GetNode<GlobalState>("/root/GlobalState").PlayerWasHurt(2);
     }
 }

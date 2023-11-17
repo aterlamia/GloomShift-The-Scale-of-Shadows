@@ -8,8 +8,8 @@ public class AttackState : EnemyState
     private float _damage = 5.0f;
     private float timeSinceLastAttack = 0.0f;
 
-    public AttackState(Enemy enemy, PLayer pLayer, AnimationNodeStateMachinePlayback playback, bool canMove,
-        float damage) : base(enemy, pLayer, playback,
+    public AttackState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, bool canMove,
+        float damage) : base(enemy, player, playback,
         canMove)
     {
         _damage = damage;

@@ -6,4 +6,5 @@ public enum StateTypes
     Ground,
     Attack,
     Hit,
+    Die,
 }

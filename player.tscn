@@ -1,6 +1,6 @@
 [gd_scene load_steps=39 format=3 uid="uid://cggbckprr8pns"]
 
-[ext_resource type="Script" path="res://PLayer.cs" id="1_7fjsr"]
+[ext_resource type="Script" path="res://Player.cs" id="1_frf4s"]
 [ext_resource type="Texture2D" uid="uid://dapymy4n5yawd" path="res://assets/Player/attack.png" id="2_65bcy"]
 [ext_resource type="Script" path="res://Sword.cs" id="2_jw025"]
 [ext_resource type="Script" path="res://StateManager.cs" id="4_46stf"]
@@ -390,7 +390,7 @@ transitions = ["Start", "move", SubResource("AnimationNodeStateMachineTransition
 graph_offset = Vector2(-245, -133)
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_7fjsr")
+script = ExtResource("1_frf4s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

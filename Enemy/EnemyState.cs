@@ -6,14 +6,14 @@ namespace GenericPlatforformer.Enemy;
 public abstract class EnemyState
 {
     protected Enemy Enemy = null;
-    protected PLayer Player = null;
+    protected Player Player = null;
     protected AnimationNodeStateMachinePlayback _playback = null;
     public StateTypes? NextState { get; set; } = null;
 
-    public EnemyState(Enemy enemy, PLayer pLayer, AnimationNodeStateMachinePlayback playback, bool canMove)
+    public EnemyState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, bool canMove)
     {
         Enemy = enemy;
-        Player = pLayer;
+        Player = player;
         _playback = playback;
         CanMove = canMove;
     }

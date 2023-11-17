@@ -38,12 +38,10 @@ public partial class Light : Node2D
     private void createLight()
     {
         var lightDetector = GetNode<CollisionShape2D>("LightArea/Shape");
-        GD.Print("hier");
         if (lightDetector == null)
         {
             return;
         }
-        GD.Print("daar");
         // set the size of the lightdetector
         RectangleShape2D rectangle = new RectangleShape2D();  
         rectangle.Size = new Vector2(_lightWidth*2, _lightHeight*2);

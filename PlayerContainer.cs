@@ -7,7 +7,7 @@ public partial class PlayerContainer : Node2D
 
     private Shadow _shadow;
     private Sprite2D _shadowSprite;
-    private PLayer _pLayer;
+    private Player _player;
     private AnimationPlayer _animationPlayer;
     private Camera2D _cameraPLayer;
     private Camera2D _cameraShadow;
@@ -25,7 +25,7 @@ public partial class PlayerContainer : Node2D
     {
         _shadow = GetNode<Shadow>("Shadow");
         _shadowSprite = _shadow.GetNode<Sprite2D>("Sprite2D");
-        _pLayer = GetNode<PLayer>("Player");
+        _player = GetNode<Player>("Player");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _cameraPLayer = GetNode<Camera2D>("Player/Camera");
         _cameraShadow = GetNode<Camera2D>("Shadow/Camera");
@@ -52,7 +52,7 @@ public partial class PlayerContainer : Node2D
         }
         else
         {
-            return _pLayer.GetDirection();
+            return _player.GetDirection();
         }
     }
 
@@ -60,12 +60,12 @@ public partial class PlayerContainer : Node2D
     {
         if (!IsShadow)
         {
-            _pLayer.Calc(delta);
-            _pLayer.MoveAndSlide();
+            _player.Calc(delta);
+            _player.MoveAndSlide();
 
-            _shadow.Position = _pLayer.Position + new Vector2(-10 * _pLayer.GetDirection().X, 0);
+            _shadow.Position = _player.Position + new Vector2(-10 * _player.GetDirection().X, 0);
 
-            if (_pLayer.GetDirection().X == 0)
+            if (_player.GetDirection().X == 0)
             {
                 _shadow.Scale = new Vector2(1.1f, 1.1f);
             }
@@ -74,8 +74,8 @@ public partial class PlayerContainer : Node2D
                 _shadow.Scale = new Vector2(1, 1);
             }
 
-            _shadow.Velocity = _pLayer.Velocity;
-            _shadow.ParentControl(delta, _pLayer.GetDirection());
+            _shadow.Velocity = _player.Velocity;
+            _shadow.ParentControl(delta, _player.GetDirection());
             _shadow.MoveAndSlide();
         }
         else
@@ -121,7 +121,7 @@ public partial class PlayerContainer : Node2D
         // loop over all lights and determine the distance. if at least one light is close enough get out of the loop
         foreach (Node2D l in lights.GetChildren())
         {
-            if (l.GlobalPosition.DistanceTo(_pLayer.GlobalPosition) < 100)
+            if (l.GlobalPosition.DistanceTo(_player.GlobalPosition) < 100)
             {
                 _shadowSprite.Material
                     .Set("shader_parameter/max_line_width", 9);

@@ -1,8 +1,10 @@
 using Godot;
 using System;
 
-public partial class PLayer : CharacterBody2D
+public partial class Player : CharacterBody2D
 {
+    public int Health { get; private set; } = 10;
+    public int MaxHealth { get; private set; } = 10;
     protected Vector2 LocalVelocity = Vector2.Zero;
     protected float Gravity = 980.0f;
     protected float Speed = 300.0f;
@@ -26,8 +28,16 @@ public partial class PLayer : CharacterBody2D
         Sprite = GetNode<Sprite2D>("Sprite2D");
         AnimationTree.Active = true;
         StateManager = GetNode<StateManager>("StateManager");
+        GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState").Connect("PlayerHurt", new Callable(this, "wasHit"));
+        GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState").UpdatePlayerHealth(Health);
     }
 
+    private void wasHit(int damage)
+    {
+        Health -= damage;
+        GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState").UpdatePlayerHealth(Health);
+        
+    }
     public virtual void Calc(double delta)
     {
         LocalVelocity = Velocity;
