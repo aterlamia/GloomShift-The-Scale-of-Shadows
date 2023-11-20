@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmkn8httokwno"]
+
+[ext_resource type="Texture2D" uid="uid://gsdkeo18v1iu" path="res://assets/lighttexture.png" id="1_1pmpi"]
+[ext_resource type="Texture2D" uid="uid://d202juvwajcs7" path="res://assets/objects/leveroff.png" id="1_l5vae"]
+[ext_resource type="Script" path="res://objects/lever/lever.cs" id="1_ya1ii"]
+[ext_resource type="Texture2D" uid="uid://c06iys32nffn1" path="res://assets/objects/leveron.png" id="2_50mca"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkuld"]
+
+[node name="Lever" type="Node2D"]
+script = ExtResource("1_ya1ii")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.266667, 0.282353, 1)
+range_z_min = -30
+range_z_max = 30
+texture = ExtResource("1_1pmpi")
+
+[node name="Leveroff" type="Sprite2D" parent="."]
+texture = ExtResource("1_l5vae")
+
+[node name="Leveron" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_50mca")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_dkuld")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

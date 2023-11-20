@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://p75tfmubf5p4"]
+
+[ext_resource type="Script" path="res://ui/Hearth.cs" id="1_12rh5"]
+[ext_resource type="Texture2D" uid="uid://bb4e1x8tyuxii" path="res://assets/ui/hearthfull.png" id="1_empoy"]
+[ext_resource type="Texture2D" uid="uid://b62phdvtvoef7" path="res://assets/ui/hearthhalfl.png" id="3_fph28"]
+[ext_resource type="Texture2D" uid="uid://b5mb3ceucbrue" path="res://assets/ui/hearthemptyl.png" id="4_88p5k"]
+
+[node name="Hearth1" type="AspectRatioContainer"]
+offset_left = 9.0
+offset_top = 10.0
+offset_right = 1161.0
+offset_bottom = 658.0
+scale = Vector2(0.0182909, 0.0221206)
+script = ExtResource("1_12rh5")
+fullHearth = ExtResource("1_empoy")
+halfHearth = ExtResource("3_fph28")
+emptyHearth = ExtResource("4_88p5k")
+
+[node name="Sprite" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_empoy")

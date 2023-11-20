@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqfg3fiif1stg"]
+
+[ext_resource type="Texture2D" uid="uid://iqfxrq630vct" path="res://assets/npc/shop.png" id="1_63xtx"]
+[ext_resource type="Script" path="res://Shop/Vendor.cs" id="1_ffmhd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1wmau"]
+size = Vector2(56, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2nmqw"]
+size = Vector2(51, 112)
+
+[node name="Vendor" type="Node2D"]
+script = ExtResource("1_ffmhd")
+
+[node name="Shop2" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_63xtx")
+flip_h = true
+
+[node name="TalkArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TalkArea"]
+position = Vector2(4, -1)
+shape = SubResource("RectangleShape2D_1wmau")
+
+[node name="GreetArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GreetArea"]
+position = Vector2(-103, -8)
+shape = SubResource("RectangleShape2D_2nmqw")
+
+[connection signal="area_entered" from="TalkArea" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="TalkArea" to="." method="_on_area_2d_area_exited"]

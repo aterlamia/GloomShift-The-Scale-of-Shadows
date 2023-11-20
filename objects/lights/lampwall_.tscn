@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://cx6uygfm40lyv"]
+
+[ext_resource type="Texture2D" uid="uid://c1knkuusgpiki" path="res://assets/objects/lampwall..png" id="1_7yqj3"]
+[ext_resource type="Script" path="res://objects/lights/lampwall_.cs" id="1_aj4ee"]
+[ext_resource type="Texture2D" uid="uid://gsdkeo18v1iu" path="res://assets/lighttexture.png" id="2_6l1bx"]
+
+[node name="WallLamp" type="Node2D"]
+script = ExtResource("1_aj4ee")
+ShadowHeight = 20.0
+ShadowStart = -100.0
+LightHeight = -90.0
+LightWidth = 50.0
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.564706, 0.6, 0.215686, 1)
+energy = 1.05
+shadow_color = Color(0.239216, 0.305882, 0.607843, 0)
+texture = ExtResource("2_6l1bx")
+
+[node name="LightShape" type="Polygon2D" parent="."]
+color = Color(0.45098, 0.529412, 0.470588, 0.294118)
+polygon = PackedVector2Array(0, 0, 50, -90, -50, -90)
+
+[node name="Lampwall_" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_7yqj3")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+texture_repeat = 3
+color = Color(0, 0, 0, 0.407843)
+polygon = PackedVector2Array(-50, -100, 50, -100, 50, -80, -50, -80)
+
+[node name="ShadowCol" type="StaticBody2D" parent="."]
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="ShadowShape" type="CollisionPolygon2D" parent="ShadowCol"]
+polygon = PackedVector2Array(-60, -100, 60, -100, 50, -80, -50, -80)

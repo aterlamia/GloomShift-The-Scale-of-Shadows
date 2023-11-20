@@ -21,7 +21,7 @@ GlobalState="*res://GlobalState.cs"
 
 [display]
 
-window/stretch/scale=2.5
+window/stretch/scale=2.2
 
 [dotnet]
 

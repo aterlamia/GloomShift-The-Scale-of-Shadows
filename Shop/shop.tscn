@@ -1,0 +1,425 @@
+[gd_scene load_steps=7 format=3 uid="uid://bcqgfgumacb6e"]
+
+[ext_resource type="Script" path="res://Shop/Shop.cs" id="1_6r615"]
+[ext_resource type="Texture2D" uid="uid://btasogs7rfngl" path="res://assets/ui/Panel.png" id="1_kvwx6"]
+[ext_resource type="Texture2D" uid="uid://c011eqh7g42r7" path="res://assets/ui/lose.png" id="2_b54p8"]
+[ext_resource type="Texture2D" uid="uid://bu4emldgwxjv" path="res://assets/ui/schrinke.png" id="3_ecgmb"]
+[ext_resource type="Texture2D" uid="uid://cd0208k0nqv30" path="res://assets/ui/empty.png" id="4_ard4r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf80q"]
+bg_color = Color(0.309804, 0.266667, 0.223529, 0.654902)
+
+[node name="SHop" type="CanvasLayer"]
+visible = false
+
+[node name="Shop" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -1.0
+offset_right = 2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_6r615")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Shop"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -187.0
+offset_top = -111.0
+offset_right = 188.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kvwx6")
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Shop/NinePatchRect/MarginContainer"]
+layout_mode = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/CenterContainer"]
+layout_mode = 2
+text = "Shop
+"
+
+[node name="GridContainer" type="GridContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 4
+
+[node name="Sepperate" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="SeperateButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel/AspectRatioContainer"]
+layout_mode = 2
+texture_normal = ExtResource("2_b54p8")
+
+[node name="Shrink" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Shrink"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Shrink/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="ShrinkButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Shrink/Panel/AspectRatioContainer2"]
+layout_mode = 2
+texture_normal = ExtResource("3_ecgmb")
+
+[node name="Empty" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty2" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty2"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty2/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty2/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty3" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty3"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty3/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty3/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty4" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty4"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty4/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty4/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty5" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty5"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty5/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty5/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty9" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty9"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty9/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty9/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty10" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty10"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty10/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty10/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty6" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty6"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty6/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty6/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty7" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty7"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty7/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty7/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="Empty8" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty8"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty8/Panel"]
+layout_mode = 1
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.46, 0.46)
+
+[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty8/Panel/AspectRatioContainer2"]
+layout_mode = 2
+disabled = true
+texture_normal = ExtResource("4_ard4r")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kf80q")
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/normal_font_size = 8
+text = "With this power-up, you sever the unbreakable link with your shadow while gaining the ability to manipulate it at will. Unshackle yourself from the past synergy and watch as your detached shadow becomes a loyal ally."
+fit_content = true
+shortcut_keys_enabled = false
+
+[node name="MarginContainer3" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/normal_font_size = 8
+text = "Q to sepperate your schadow.  
+Cost: 1 scale"
+fit_content = true
+shortcut_keys_enabled = false
+
+[node name="MarginContainer" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="BuyButton" type="Button" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+disabled = true
+text = "BUY"
+
+[connection signal="pressed" from="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel/AspectRatioContainer/SeperateButton" to="Shop" method="_on_SolidShadow_pressed"]
