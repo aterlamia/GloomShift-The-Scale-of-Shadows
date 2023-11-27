@@ -21,7 +21,6 @@ public class AttackState : EnemyState
 
     public override void Enter()
     {
-        GD.Print("Attack!");
         _playback.Travel("attack");
     }
 

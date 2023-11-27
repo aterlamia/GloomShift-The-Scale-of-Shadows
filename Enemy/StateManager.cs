@@ -21,9 +21,11 @@ public partial class StateManager : Node
 
 	public void CheckHealthAndSwitch()
 	{
+		GD.Print("checking health");
 		var damageHandler = _enemy.GetNode<DamageHandler>("DamageHandler");
 		if (damageHandler.Health <= 0)
 		{
+			GD.Print("checking health he's dead jim");
 			damageHandler.Die();
 		}
 		else
@@ -62,8 +64,11 @@ public partial class StateManager : Node
 			CurrentState.Exit();
 		}
 
-		CurrentState = AvailableStates[stateName];
-		CurrentState.Enter();
+		if (CurrentState != AvailableStates[stateName])
+		{
+			CurrentState = AvailableStates[stateName];
+			CurrentState.Enter();
+		}
 	}
 	
 	public Dictionary<string, EnemyState> AvailableStates = new Dictionary<string, EnemyState>();

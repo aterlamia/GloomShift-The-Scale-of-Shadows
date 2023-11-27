@@ -23,6 +23,11 @@ public partial class Enemy : CharacterBody2D
     public void wasHit()
     {
         var stateMachine = GetNode<StateManager>("StateManager");
+        if (GetNode<DamageHandler>("DamageHandler").IsDead)
+        {
+            stateMachine.ChangeState(StateTypes.Die);
+        }
+
         stateMachine.ChangeState(StateTypes.Hit);
     }
 

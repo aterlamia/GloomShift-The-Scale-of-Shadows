@@ -20,7 +20,6 @@ public class AttackState : State
 
     public override void Enter()
     {
-        GD.Print("Attack!");
         _playback.Travel("attack");
     }
 

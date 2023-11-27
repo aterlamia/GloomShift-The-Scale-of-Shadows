@@ -1,13 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqfg3fiif1stg"]
+[gd_scene load_steps=8 format=3 uid="uid://cqfg3fiif1stg"]
 
 [ext_resource type="Texture2D" uid="uid://iqfxrq630vct" path="res://assets/npc/shop.png" id="1_63xtx"]
 [ext_resource type="Script" path="res://Shop/Vendor.cs" id="1_ffmhd"]
+[ext_resource type="FontFile" uid="uid://b2klgsihxep0b" path="res://assets/fonts/PixelColeco-4vJW.ttf" id="3_n1e67"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1wmau"]
 size = Vector2(56, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2nmqw"]
 size = Vector2(51, 112)
+
+[sub_resource type="Theme" id="Theme_wn4co"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7giu"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="Vendor" type="Node2D"]
 script = ExtResource("1_ffmhd")
@@ -29,5 +35,142 @@ shape = SubResource("RectangleShape2D_1wmau")
 position = Vector2(-103, -8)
 shape = SubResource("RectangleShape2D_2nmqw")
 
+[node name="Text1" type="Panel" parent="."]
+visible = false
+offset_left = -140.0
+offset_top = -68.0
+offset_right = -35.0
+offset_bottom = -10.0
+theme = SubResource("Theme_wn4co")
+theme_override_styles/panel = SubResource("StyleBoxFlat_y7giu")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Text1"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 14.0
+offset_right = 103.0
+offset_bottom = 355.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_n1e67")
+theme_override_fonts/bold_font = ExtResource("3_n1e67")
+theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/bold_font_size = 8
+bbcode_enabled = true
+text = "Hey you there i saw you looting a [color=\"blue\"][b]SCALE[/b][/color] from that [color=\"red\"][b]DRAGONLING[/b][/color]"
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Text1"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 45.0
+offset_right = 137.0
+offset_bottom = 85.0
+theme_override_colors/default_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_font_sizes/normal_font_size = 10
+text = "X"
+
+[node name="NoScale" type="Panel" parent="."]
+visible = false
+offset_left = -140.0
+offset_top = -68.0
+offset_right = -35.0
+offset_bottom = -10.0
+theme = SubResource("Theme_wn4co")
+theme_override_styles/panel = SubResource("StyleBoxFlat_y7giu")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="NoScale"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 6.0
+offset_right = 103.0
+offset_bottom = 347.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_n1e67")
+theme_override_fonts/bold_font = ExtResource("3_n1e67")
+theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/bold_font_size = 8
+bbcode_enabled = true
+text = "I would not attemt this jump if i where you. Maybe first attack that  [color=\"red\"][b]DRAGONLING[/b][/color]"
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="NoScale"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 45.0
+offset_right = 137.0
+offset_bottom = 85.0
+theme_override_colors/default_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_font_sizes/normal_font_size = 10
+text = "X"
+
+[node name="Text2" type="Panel" parent="."]
+visible = false
+offset_left = -140.0
+offset_top = -68.0
+offset_right = -35.0
+offset_bottom = -10.0
+theme = SubResource("Theme_wn4co")
+theme_override_styles/panel = SubResource("StyleBoxFlat_y7giu")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Text2"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 14.0
+offset_right = 103.0
+offset_bottom = 355.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_n1e67")
+theme_override_fonts/bold_font = ExtResource("3_n1e67")
+theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/bold_font_size = 8
+bbcode_enabled = true
+text = "I am a [color=\"green\"][b]SHADOW WIZARD[/b][/color] and need those for research"
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Text2"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 45.0
+offset_right = 137.0
+offset_bottom = 85.0
+theme_override_colors/default_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_font_sizes/normal_font_size = 10
+text = "X"
+
+[node name="Text3" type="Panel" parent="."]
+visible = false
+offset_left = -140.0
+offset_top = -68.0
+offset_right = -35.0
+offset_bottom = -10.0
+theme = SubResource("Theme_wn4co")
+theme_override_styles/panel = SubResource("StyleBoxFlat_y7giu")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Text3"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 6.0
+offset_right = 105.0
+offset_bottom = 347.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("3_n1e67")
+theme_override_fonts/bold_font = ExtResource("3_n1e67")
+theme_override_font_sizes/normal_font_size = 8
+theme_override_font_sizes/bold_font_size = 8
+bbcode_enabled = true
+text = "Would you be willing to sell me those you find. I can teach you some  [color=\"blue\"][b]SHADOW MAGIC[/b][/color]"
+fit_content = true
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Text3"]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 45.0
+offset_right = 137.0
+offset_bottom = 85.0
+theme_override_colors/default_color = Color(0.0784314, 0.0784314, 0.0784314, 1)
+theme_override_font_sizes/normal_font_size = 10
+text = "X"
+
 [connection signal="area_entered" from="TalkArea" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="TalkArea" to="." method="_on_area_2d_area_exited"]
+[connection signal="body_entered" from="GreetArea" to="." method="_on_greet_area_area_entered"]

@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using GenericPlatforformer;
+using GenericPlatforformer.State;
 
 public partial class Player : CharacterBody2D
 {
@@ -12,6 +14,7 @@ public partial class Player : CharacterBody2D
     protected AnimationTree AnimationTree;
     protected Sprite2D Sprite;
     protected StateManager StateManager;
+    protected GlobalState _globalState;
     public bool ShadowControlled { get; set; } = false;
 
     protected Vector2 Direction = Vector2.Zero;
@@ -23,20 +26,30 @@ public partial class Player : CharacterBody2D
 
     public override void _Ready()
     {
+        _globalState = GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState");
         AnimationTree = GetNode<AnimationTree>("AnimationTree");
         _attackHitPoint = GetNode<Area2D>("Sword");
         Sprite = GetNode<Sprite2D>("Sprite2D");
         AnimationTree.Active = true;
         StateManager = GetNode<StateManager>("StateManager");
-        GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState").Connect("PlayerHurt", new Callable(this, "wasHit"));
-        GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState").Connect("Respawn", new Callable(this, "respawn"));
-        GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState").UpdatePlayerHealth(Health);
+        addStateListeners();
     }
 
+    private void addStateListeners()
+    {
+        _globalState.Connect("PlayerHurt", new Callable(this, "wasHit"));
+        _globalState.Connect("Respawn", new Callable(this, "respawn"));
+        _globalState.UpdatePlayerHealth(Health);
+        _globalState.Connect("CloseDialog", new Callable(this, "closeDialog"));
+    }
+
+    private void closeDialog()
+    {
+        StateManager.ChangeState(StateTypes.Ground);
+    }
     
     private void respawn(Node2D node)
     {
-        GD.Print(node.Name);
         if (node == null)
         {
             return;
@@ -105,5 +118,12 @@ public partial class Player : CharacterBody2D
         {
             LocalVelocity.Y += Gravity * (float)delta;
         }
+    }
+
+    public void Halt()
+    {
+        Velocity = Vector2.Zero;
+        Direction = Vector2.Zero;
+        AnimationTree.Set("parameters/move/blend_position", Direction.X);
     }
 }

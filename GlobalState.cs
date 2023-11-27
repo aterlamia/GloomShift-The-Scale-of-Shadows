@@ -1,3 +1,4 @@
+using System;
 using GenericPlatforformer.Shop;
 using Godot;
 
@@ -10,19 +11,31 @@ public partial class GlobalState : Node
 
     private int _powersState = 0;
 
+    public int Scales
+    {
+        get => scales;
+        set => scales = value;
+    }
+
+    
     public bool HasPower(Powers power)
     {
-        return (_powersState & (int)power) == (int)power;
+        var hasPower =  (_powersState & (int)power) == (int)power;
+        GD.Print("Has power: " + power + " - " +  hasPower );
+        return hasPower;
     }
 
     public void BuyPower(Powers power)
     {
-        _powersState |= (int)power;
+        _powersState += (int)power;
         SetPower(power);
         GetTree().Root.GetNode<CanvasLayer>("Game/Level/Shop").Visible = false;
-        GD.Print(power + " bought");
     }
 
+    
+    [Signal]
+    public delegate void CloseDialogEventHandler();
+    
     [Signal]
     public delegate void PowerChangedEventHandler(int power);
 
@@ -37,6 +50,10 @@ public partial class GlobalState : Node
 
     [Signal]
     public delegate void PlayerHealthChangedEventHandler(int health);
+
+    [Signal]
+    public delegate void SwitchLevelEventHandler(string nextlvl);
+
 
     [Signal]
     public delegate void SpawnLootEventHandler(LootTypes lootType, Vector2 position);
@@ -56,10 +73,21 @@ public partial class GlobalState : Node
     [Signal]
     public delegate void LootChangedEventHandler(string lootType, int value);
 
+    public void SwitchLevelTo(string lvl)
+    {
+        EmitSignal(SignalName.SwitchLevel, lvl);
+    }
+    
     public void SpawnLootAtPos(LootTypes lootType, Vector2 position)
     {
         EmitSignal(SignalName.SpawnLoot, lootType.ToString(), position);
     }
+
+    public void FireCloseDialog()
+    {
+        EmitSignal(SignalName.CloseDialog);
+    }
+
 
     public void RespawnPlayer()
     {
@@ -68,19 +96,16 @@ public partial class GlobalState : Node
 
     public void SetLoot(LootTypes lootType, int value)
     {
-        GD.Print("Loot changed: " + lootType + " " + value);
         EmitSignal(SignalName.LootChanged, lootType.ToString(), value);
     }
 
 
     public void PickupLoot(LootTypes lootType, int value)
     {
-        GD.Print("Loot added .: " + lootType + " " + value);
         if (lootType == LootTypes.Scale)
         {
-            scales += value;
-            GD.Print("Loot changed ... : " + lootType + " " + scales);
-            SetLoot(lootType, scales);
+            Scales += value;
+            SetLoot(lootType, Scales);
         }
     }
 

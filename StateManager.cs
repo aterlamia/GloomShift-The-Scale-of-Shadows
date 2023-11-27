@@ -1,10 +1,12 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using GenericPlatforformer;
 using GenericPlatforformer.State;
 
 public partial class StateManager : Node
 {
+	GlobalState _globalState = null;
 	[Export] string stateManagerName = "StateManager";
 	[Signal]
 	public delegate void StateChangedEventHandler(string state);
@@ -29,6 +31,9 @@ public partial class StateManager : Node
 			case StateTypes.Attack:
 				stateName = "attack";
 				break;
+			case StateTypes.Dialog:
+				stateName = "dialog";
+				break;
 			default:
 				GD.Print("Unknown state type");
 				break;
@@ -46,6 +51,7 @@ public partial class StateManager : Node
 	public Dictionary<string, State> AvailableStates = new Dictionary<string, State>();
 	public override void _Ready()
 	{
+		_globalState = GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState");
 		_player = GetParent<Player>();
 		_animationTree = _player.GetNode<AnimationTree>("AnimationTree");
 		_playback = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
@@ -53,6 +59,7 @@ public partial class StateManager : Node
 		AvailableStates.Add("ground", new GroundState(_player, _playback, true));
 		AvailableStates.Add("air", new AirState(_player, _playback, true));
 		AvailableStates.Add("attack", new AttackState(_player, _playback, false, 5.0f));
+		AvailableStates.Add("dialog", new DialogState(_player, _playback, false, _globalState ));
 		
 		ChangeState(StateTypes.Ground);
 	}

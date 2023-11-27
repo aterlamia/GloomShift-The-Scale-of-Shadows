@@ -31,7 +31,6 @@ public partial class Shadow : Player
 
     private void wasHit(int damage)
     {
-        GD.Print("The shadow was hit for " + damage + " damage");
     }
     //
     // public override void Calc(double delta)

@@ -2,6 +2,7 @@ using Godot;
 using System;
 using GenericPlatforformer;
 using GenericPlatforformer.Shop;
+using GenericPlatforformer.State;
 
 public partial class PlayerContainer : Node2D
 {
@@ -21,8 +22,9 @@ public partial class PlayerContainer : Node2D
 
     private Vector2 _lastDirection = Vector2.Zero;
     private Vector2 _currentDirection = Vector2.Zero;
-
-
+    private bool showDisapear = false;
+    private bool freeze = false;
+    protected StateManager StateManager;
 
     public override void _Ready()
     {
@@ -33,6 +35,12 @@ public partial class PlayerContainer : Node2D
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _cameraPLayer = GetNode<Camera2D>("Player/Camera");
         _cameraShadow = GetNode<Camera2D>("Shadow/Camera");
+        _globalState.Connect("CloseDialog", new Callable(this, "closeDialog"));
+        StateManager = _player.GetNode<StateManager>("StateManager");
+    }
+    private void closeDialog()
+    {
+        _player.GetNode<Panel>("disapear").Visible = false;
     }
 
 
@@ -118,7 +126,7 @@ public partial class PlayerContainer : Node2D
     private void HandleLightDetection()
     {
         // get the Lights node and determine if the player is within a certain distance of one of the lights
-        var lights = GetTree().Root.GetNode<Node2D>("Game/Level/Lights");
+        var lights = GetParent<Node2D>().GetNode("Lights");
         _shadowSprite.Material.Set("shader_parameter/max_line_width", 6);
         _shadowSprite.Material.Set("shader_parameter/outline_colour",
             new Vector4(0.4f, 0.4f, 0.4f, 0.3f));
@@ -138,28 +146,42 @@ public partial class PlayerContainer : Node2D
 
     private void HandleShadowMovement()
     {
-        if (IsShadow)
+        if (!IsShadow || freeze)
         {
-            if (_shadow.LightDetector != null)
+            return;
+        }
+
+        if (_shadow.LightDetector != null && _globalState.HasPower(Powers.ShrinkShadow))
+        {
+            var distanceToPole = _shadow.LightDetector.GetParent<Node2D>().GlobalPosition
+                .DistanceTo(_shadow.GlobalPosition);
+
+            var shape = _shadow.LightDetector.GetNode<CollisionShape2D>("Shape");
+            var shadowHeight = _shadow.GetNode<CollisionShape2D>("LightDetector/CollisionShape2D").Shape.GetRect().Size
+                .Y;
+            var height = shape.Shape.GetRect().Size.Y;
+            var width = shape.Shape.GetRect().Size.X;
+            var bottom = width / 2;
+            var hypothenuse = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(bottom, 2));
+            var angle = Math.Asin(height / hypothenuse);
+            var adjecent = bottom - distanceToPole;
+
+            //calulate the opposide based on the angle and the adjecent
+            var opposite = Math.Tan(angle) * adjecent;
+            var scale = opposite / shadowHeight;
+            _shadow.Scale = new Vector2(Mathf.Min((float)scale, 1), Mathf.Min((float)scale, 1));
+
+            if (_shadow.Scale.X < 0.43f)
             {
-                var distanceToPole = _shadow.LightDetector.GetParent<Node2D>().GlobalPosition
-                    .DistanceTo(_shadow.GlobalPosition);
-                
-                var shape = _shadow.LightDetector.GetNode<CollisionShape2D>("Shape");
-                var shadowHeight = _shadow.GetNode<CollisionShape2D>("LightDetector/CollisionShape2D").Shape.GetRect().Size.Y;
-                var height = shape.Shape.GetRect().Size.Y;
-                var width = shape.Shape.GetRect().Size.X;
-                var bottom = width / 2;
-                var hypothenuse = Math.Sqrt(Math.Pow(height, 2) + Math.Pow(bottom, 2));
-                var angle = Math.Asin(height / hypothenuse);
-                var adjecent = bottom - distanceToPole;
-                
-                //calulate the opposide based on the angle and the adjecent
-                var opposite = Math.Tan(angle) * adjecent;
-                var scale = opposite / shadowHeight;
-                _shadow.Scale = new Vector2(Mathf.Min((float)scale,1), Mathf.Min((float)scale,1));
+                if (!showDisapear)
+                {
+                    showDisapear = true;
+                    _globalState.FireCloseDialog();
+                    _player.GetNode<Panel>("disapear").Visible = true;
+                    StateManager.ChangeState(StateTypes.Dialog);
+                }
 
-
+                IsShadow = false;
             }
         }
     }
@@ -167,11 +189,30 @@ public partial class PlayerContainer : Node2D
     //listen to the tab key
     public override void _Input(InputEvent @event)
     {
+        if (@event.IsActionPressed("nextDialog") &&  _player.GetNode<Panel>("disapear").Visible)
+        {
+            _globalState.FireCloseDialog();
+        }
+
         if (@event.IsActionPressed("switch") && _globalState.HasPower(Powers.SeperareShadow))
         {
-            IsShadow = !IsShadow;
-            _cameraShadow.Enabled = IsShadow;
-            _cameraPLayer.Enabled = !IsShadow;
+            if (IsShadow && freeze)
+            {
+                freeze = false;
+                IsShadow = !IsShadow;
+                _cameraShadow.Enabled = IsShadow;
+                _cameraPLayer.Enabled = !IsShadow;
+            }
+            else if (IsShadow && _shadow.LightDetector != null)
+            {
+                freeze = true;
+            }
+            else
+            {
+                IsShadow = !IsShadow;
+                _cameraShadow.Enabled = IsShadow;
+                _cameraPLayer.Enabled = !IsShadow;
+            }
 
             if (IsShadow)
             {

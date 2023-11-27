@@ -4,8 +4,8 @@ namespace GenericPlatforformer.State;
 
 public abstract class State
 {
-    protected Player _player = null;
-    protected AnimationNodeStateMachinePlayback _playback = null;
+    protected readonly Player _player = null;
+    protected readonly AnimationNodeStateMachinePlayback _playback = null;
     public StateTypes? NextState { get; set; } = null;
 
     public State(Player player, AnimationNodeStateMachinePlayback playback, bool canMove)

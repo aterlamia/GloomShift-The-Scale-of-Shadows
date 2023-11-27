@@ -1,10 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcqgfgumacb6e"]
+[gd_scene load_steps=10 format=3 uid="uid://bcqgfgumacb6e"]
 
 [ext_resource type="Script" path="res://Shop/Shop.cs" id="1_6r615"]
 [ext_resource type="Texture2D" uid="uid://btasogs7rfngl" path="res://assets/ui/Panel.png" id="1_kvwx6"]
 [ext_resource type="Texture2D" uid="uid://c011eqh7g42r7" path="res://assets/ui/lose.png" id="2_b54p8"]
 [ext_resource type="Texture2D" uid="uid://bu4emldgwxjv" path="res://assets/ui/schrinke.png" id="3_ecgmb"]
 [ext_resource type="Texture2D" uid="uid://cd0208k0nqv30" path="res://assets/ui/empty.png" id="4_ard4r"]
+[ext_resource type="Texture2D" uid="uid://dthhx3sea0ktg" path="res://assets/ui/losedis.png" id="4_utuuy"]
+[ext_resource type="Texture2D" uid="uid://dfvr2hxflj4td" path="res://assets/ui/schrinkedis.png" id="6_h63le"]
+[ext_resource type="FontFile" uid="uid://b2klgsihxep0b" path="res://assets/fonts/PixelColeco-4vJW.ttf" id="8_l2pf3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf80q"]
 bg_color = Color(0.309804, 0.266667, 0.223529, 0.654902)
@@ -18,9 +21,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 2.0
-offset_top = -1.0
+offset_top = 21.0
 offset_right = 2.0
-offset_bottom = -1.0
+offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -97,7 +100,9 @@ scale = Vector2(0.46, 0.46)
 
 [node name="SeperateButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel/AspectRatioContainer"]
 layout_mode = 2
+disabled = true
 texture_normal = ExtResource("2_b54p8")
+texture_disabled = ExtResource("4_utuuy")
 
 [node name="Shrink" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
 layout_mode = 2
@@ -120,7 +125,9 @@ scale = Vector2(0.46, 0.46)
 
 [node name="ShrinkButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Shrink/Panel/AspectRatioContainer2"]
 layout_mode = 2
+disabled = true
 texture_normal = ExtResource("3_ecgmb")
+texture_disabled = ExtResource("6_h63le")
 
 [node name="Empty" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
 layout_mode = 2
@@ -381,45 +388,73 @@ theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer"]
+[node name="Sidebar" type="VBoxContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer/MarginContainer2"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar/MarginContainer2"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_fonts/normal_font = ExtResource("8_l2pf3")
+theme_override_font_sizes/normal_font_size = 10
+text = "Solid Shadow"
+fit_content = true
+shortcut_keys_enabled = false
+
+[node name="MarginContainer4" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar/MarginContainer4"]
 layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 1
+theme_override_fonts/normal_font = ExtResource("8_l2pf3")
 theme_override_font_sizes/normal_font_size = 8
 text = "With this power-up, you sever the unbreakable link with your shadow while gaining the ability to manipulate it at will. Unshackle yourself from the past synergy and watch as your detached shadow becomes a loyal ally."
 fit_content = true
 shortcut_keys_enabled = false
 
-[node name="MarginContainer3" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer/MarginContainer3"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar/MarginContainer3"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 1
+theme_override_fonts/normal_font = ExtResource("8_l2pf3")
 theme_override_font_sizes/normal_font_size = 8
-text = "Q to sepperate your schadow.  
+text = "W to sepperate your schadow.  
 Cost: 1 scale"
 fit_content = true
 shortcut_keys_enabled = false
 
-[node name="MarginContainer" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="BuyButton" type="Button" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/VBoxContainer/MarginContainer"]
+[node name="BuyButton" type="Button" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar/MarginContainer"]
 layout_mode = 2
 disabled = true
 text = "BUY"
 
+[node name="Button" type="Button" parent="Shop/NinePatchRect"]
+layout_mode = 0
+offset_left = 357.0
+offset_top = 2.0
+offset_right = 372.0
+offset_bottom = 24.0
+theme_override_font_sizes/font_size = 10
+text = "X"
+
 [connection signal="pressed" from="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel/AspectRatioContainer/SeperateButton" to="Shop" method="_on_SolidShadow_pressed"]
+[connection signal="pressed" from="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Shrink/Panel/AspectRatioContainer2/ShrinkButton" to="Shop" method="_on_shrink_button_pressed"]
+[connection signal="pressed" from="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar/MarginContainer/BuyButton" to="Shop" method="_on_buy_button_pressed"]
+[connection signal="pressed" from="Shop/NinePatchRect/Button" to="Shop" method="_on_button_pressed"]
