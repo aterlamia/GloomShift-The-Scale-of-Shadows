@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dgvqb77dp7wx"]
+[gd_scene load_steps=38 format=3 uid="uid://dgvqb77dp7wx"]
 
 [ext_resource type="TileSet" uid="uid://bbvvie5bphjnr" path="res://world/TileSet.tres" id="1_voe3d"]
 [ext_resource type="PackedScene" uid="uid://cx6uygfm40lyv" path="res://objects/lights/lampwall_.tscn" id="2_3uagw"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://b72cbab4oa0vn" path="res://Player/shadow.tscn" id="14_1oy4m"]
 [ext_resource type="PackedScene" uid="uid://cggbckprr8pns" path="res://Player/player.tscn" id="15_qtu6c"]
 [ext_resource type="PackedScene" uid="uid://c8fce55820o2l" path="res://Enemy/enemy.tscn" id="16_bnkjq"]
+[ext_resource type="Script" path="res://levels/AudioStreamPlayer.cs" id="16_fmaga"]
 [ext_resource type="Script" path="res://objects/loot/LootSpawner.cs" id="17_8l6bq"]
 [ext_resource type="PackedScene" uid="uid://ygsw0meoa5ky" path="res://objects/loot/loot_scale.tscn" id="18_8wevq"]
 [ext_resource type="PackedScene" uid="uid://c5vnqfy2xhkg3" path="res://ui/ui.tscn" id="19_433xb"]
@@ -233,6 +234,7 @@ position = Vector2(3513, 260)
 texture = ExtResource("10_lo32e")
 
 [node name="Shrink" type="Node2D" parent="Start"]
+visible = false
 
 [node name="Wkey2" type="Sprite2D" parent="Start/Shrink"]
 position = Vector2(1641, 240)
@@ -294,7 +296,7 @@ position = Vector2(481, 59)
 position = Vector2(982, 209)
 
 [node name="PlayerContainer" type="Node2D" parent="."]
-position = Vector2(-333, -1)
+position = Vector2(-388, -10)
 script = ExtResource("13_kddpm")
 
 [node name="Shadow" parent="PlayerContainer" instance=ExtResource("14_1oy4m")]
@@ -308,6 +310,9 @@ root_node = NodePath("../Player/Camera")
 libraries = {
 "": SubResource("AnimationLibrary_egooo")
 }
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerContainer"]
+script = ExtResource("16_fmaga")
 
 [node name="Enemy" parent="." instance=ExtResource("16_bnkjq")]
 position = Vector2(2960, 272)
@@ -324,6 +329,7 @@ LootScenes = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("21_p0pjj")
+volume_db = -14.476
 pitch_scale = 0.79
 autoplay = true
 

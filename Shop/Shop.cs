@@ -10,18 +10,18 @@ public partial class Shop : Control
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        //assign globalstate to a private variable
-        // if (GlobalState.Instance != null)
         _globalState = GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState");
+        _globalState.Connect("PowerChanged", new Callable(this, "close"));
+    }
 
-
-        // if()
-        // "Shop/:
+    private void close(int power)
+    {
+        GD.Print("tetet");
+        GetParent<CanvasLayer>().Visible = false;
     }
 
     private void _on_buy_button_pressed()
     {
-        GD.Print("buy button pressed" + currentActive);
         var sidebar =
             GetNode<Node>(
                 "NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar");
@@ -41,11 +41,12 @@ public partial class Shop : Control
 
     public void _on_button_pressed()
     {
-        GetTree().Root.GetNode<CanvasLayer>("Game/Level/Shop").Visible = false;
+       GetParent<CanvasLayer>().Visible = false;
     }
 
     public void checkBuyable()
     {
+        GD.Print("cherl");
         GetNode<TextureButton>(
                     "NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel/AspectRatioContainer/SeperateButton")
                 .Disabled =
@@ -54,6 +55,9 @@ public partial class Shop : Control
                     "NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Shrink/Panel/AspectRatioContainer2/ShrinkButton")
                 .Disabled =
             true;
+        
+        GD.Print(_globalState.Scales);
+        GD.Print(!_globalState.HasPower(Powers.SeperareShadow));
         if (_globalState.Scales > 0 && !_globalState.HasPower(Powers.SeperareShadow))
         {
             GetNode<TextureButton>(

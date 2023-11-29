@@ -12,7 +12,6 @@ public partial class Loot : Control
 
 	private void lootChanged(string type, int val)
 	{
-		GD.Print("Loot changed 111: " + type + " " + val);
 		GetNode<Label>("Label").Text = val.ToString();
 
 	}

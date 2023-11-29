@@ -418,4 +418,6 @@ monitoring = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
 shape = SubResource("CircleShape2D_6rfy4")
 
+[node name="Sounds" type="AudioStreamPlayer2D" parent="."]
+
 [connection signal="body_entered" from="Attack" to="." method="_on_attack_body_entered"]

@@ -32,8 +32,6 @@ public class GroundState: EnemyState
         var tempDir = Enemy.Direction;
         if (timeSinceLastAttack >= attackCooldown && inAttackRange())
         {
-            GD.Print("Attack range", timeSinceLastAttack);
-            
             timeSinceLastAttack = 0;
             NextState = StateTypes.Attack;
         }
@@ -108,7 +106,7 @@ public class GroundState: EnemyState
         Enemy.MoveSpeed = _moveSpeed;
     }
 
-    public GroundState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, bool canMove) : base(enemy,player, playback, canMove)
+    public GroundState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, AudioStreamPlayer2D sound, bool canMove) : base(enemy,player, playback, sound,canMove)
     {
     }
 }

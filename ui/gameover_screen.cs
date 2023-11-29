@@ -2,7 +2,7 @@ using Godot;
 using System;
 using GenericPlatforformer;
 
-public partial class Exit : Area2D
+public partial class gameover_screen : Control
 {
 	private GlobalState _globalState;
 
@@ -10,18 +10,23 @@ public partial class Exit : Area2D
 	public override void _Ready()
 	{
 		_globalState = GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState");
+		GetNode<GlobalState>("/root/GlobalState").Connect("Gameover", new Callable(this, "gameover"));
+	}
+
+	private void gameover()
+	{
+		GD.Print("gamoverscree");
+		Visible = true;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
 	}
-	
-	private void _on_body_entered(Node body)
+
+	private void _on_button_pressed()
 	{
-		if (body.Name == "Player")
-		{
-			_globalState.SwitchLevelTo("level2");
-		}
+		Visible = false;
+		_globalState.SwitchLevelTo(_globalState.Currentlevel);
 	}
 }

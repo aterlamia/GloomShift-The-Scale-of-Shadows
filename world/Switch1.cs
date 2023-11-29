@@ -23,7 +23,7 @@ public partial class Switch1 : Area2D
 	}
 	
 	private void _on_body_exit(Node2D body)
-	{
+	{ 
 		if (body is Shadow)
 		{
 			_switchActive = false;
@@ -34,12 +34,12 @@ public partial class Switch1 : Area2D
 	{
 		if (@event.IsActionPressed("activate") && _switchActive)
 		{
-			GetTree().Root.GetNode<TileMap>("Game/Level/TileMap").SetCell(3, new Vector2I(135, 19),0, new Vector2I(11, 7));
-			GetTree().Root.GetNode<TileMap>("Game/Level/TileMap").SetCell(3, new Vector2I(135, 18),0, new Vector2I(11, 6));
+			GetParent<TileMap>().SetCell(3, new Vector2I(135, 19),0, new Vector2I(11, 7));
+			GetParent<TileMap>().SetCell(3, new Vector2I(135, 18),0, new Vector2I(11, 6));
 			
-			GetTree().Root.GetNode<TileMap>("Game/Level/TileMap").SetCell(3, new Vector2I(46, 17),0, new Vector2I(6, 2));
-			GetTree().Root.GetNode<TileMap>("Game/Level/TileMap").SetCell(3, new Vector2I(46, 18),0, new Vector2I(6, 2));
-			GetTree().Root.GetNode<TileMap>("Game/Level/TileMap").SetCell(3, new Vector2I(46, 19),0, new Vector2I(6, 2));
+			GetParent<TileMap>().SetCell(3, new Vector2I(46, 17),0, new Vector2I(6, 2));
+			GetParent<TileMap>().SetCell(3, new Vector2I(46, 18),0, new Vector2I(6, 2));
+			GetParent<TileMap>().SetCell(3, new Vector2I(46, 19),0, new Vector2I(6, 2));
 		}
 	}
 }

@@ -8,10 +8,12 @@ public abstract class EnemyState
     protected Enemy Enemy = null;
     protected Player Player = null;
     protected AnimationNodeStateMachinePlayback _playback = null;
+    protected readonly AudioStreamPlayer2D _sound;
     public StateTypes? NextState { get; set; } = null;
 
-    public EnemyState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, bool canMove)
+    public EnemyState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, AudioStreamPlayer2D sound, bool canMove)
     {
+        _sound = sound;
         Enemy = enemy;
         Player = player;
         _playback = playback;

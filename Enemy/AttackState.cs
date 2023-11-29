@@ -8,9 +8,8 @@ public class AttackState : EnemyState
     private float _damage = 5.0f;
     private float timeSinceLastAttack = 0.0f;
 
-    public AttackState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, bool canMove,
-        float damage) : base(enemy, player, playback,
-        canMove)
+    public AttackState(Enemy enemy, Player player, AnimationNodeStateMachinePlayback playback, AudioStreamPlayer2D sound, bool canMove,
+        float damage) : base(enemy, player, playback,sound, canMove)
     {
         _damage = damage;
     }
@@ -21,7 +20,9 @@ public class AttackState : EnemyState
 
     public override void Enter()
     {
+        var land = (AudioStreamWav)ResourceLoader.Load("res://assets/sounds/hit2.wav");
         _playback.Travel("attack");
+        _sound.Play();
     }
 
     public override void Exit()

@@ -18,7 +18,8 @@ public partial class StateManager : Node
 	private Player _player = null;
 	private AnimationTree _animationTree = null;
 	private AnimationNodeStateMachinePlayback _playback = null;
-
+	private AudioStreamPlayer2D _sound;
+	
 	public void CheckHealthAndSwitch()
 	{
 		GD.Print("checking health");
@@ -78,11 +79,12 @@ public partial class StateManager : Node
 		_enemy = GetParent<Enemy>();
 		_animationTree = _enemy.GetNode<AnimationTree>("AnimationTree");
 		_playback = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
-			
-		AvailableStates.Add("ground", new GroundState(_enemy,_player, _playback, true));
-		AvailableStates.Add("attack", new AttackState(_enemy, _player,_playback, false, 5.0f));
-		AvailableStates.Add("hit", new HitState(_enemy, _player,_playback, false));
-		AvailableStates.Add("die", new DieState(_enemy, _player,_playback, false));
+		_sound = _enemy.GetNode<AudioStreamPlayer2D>("Sounds");
+		
+		AvailableStates.Add("ground", new GroundState(_enemy,_player, _playback,_sound, true));
+		AvailableStates.Add("attack", new AttackState(_enemy, _player,_playback,_sound, false, 5.0f));
+		AvailableStates.Add("hit", new HitState(_enemy, _player,_playback,_sound, false));
+		AvailableStates.Add("die", new DieState(_enemy, _player,_playback,_sound, false));
 		
 		ChangeState(StateTypes.Ground);
 	}

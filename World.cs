@@ -9,14 +9,15 @@ public partial class World : Node2D
 	public string LevelName = "level1";
 	// Called when the node enters the scene tree for the first time.
 	private GlobalState _globalState = null;
+
+	private Node2D _container = null;
 	public override void _Ready()
 	{
-		var level = (PackedScene) ResourceLoader.Load("res://levels/" + LevelName + ".tscn");
-		var instance = (Node2D) level.Instantiate();
-		AddChild(instance);
-
 		_globalState = GetNode<GlobalState>("/root/GlobalState");
 		_globalState.Connect("SwitchLevel", new Callable(this, "changeLevel"));
+		_globalState.Connect("Gameover", new Callable(this, "gameover"));
+		_container = GetTree().Root.GetNode<Node2D>("Game/LevelContainer");
+		switchLevel(LevelName);
 	}
 	
 	private void changeLevel(string nextLevel)
@@ -28,15 +29,27 @@ public partial class World : Node2D
 	public override void _Process(double delta)
 	{
 	}
-	
+
+	private void gameover()
+	{
+		if (_container.GetChildCount() > 0)
+		{
+			_container.GetChild(0).CallDeferred("queue_free");
+		}
+	}
+
 	//switch to the next level
 	public void switchLevel(string nextLevel)
 	{
 		var level = (PackedScene) ResourceLoader.Load("res://levels/" + nextLevel + ".tscn");
 		//remove the current level
-		GetTree().Root.GetNode<World>("Game").GetChild(0).CallDeferred("queue_free");
+		if (_container.GetChildCount() > 0)
+		{
+			_container.GetChild(0).CallDeferred("queue_free");
+		}
+
 		var instance = (Node2D) level.Instantiate();
-		GetTree().Root.GetNode<World>("Game").AddChild(instance);
+		_container.AddChild(instance);
 	}
 }
 	

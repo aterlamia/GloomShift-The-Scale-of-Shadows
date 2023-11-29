@@ -9,7 +9,10 @@ public partial class GlobalState : Node
     private int scales = 0;
     private Node2D _respawnPoint = null;
 
-    private int _powersState = 0;
+    private int _powersState = 3;
+
+
+    public string Currentlevel { get; private set; } = "level1";
 
     public int Scales
     {
@@ -21,7 +24,6 @@ public partial class GlobalState : Node
     public bool HasPower(Powers power)
     {
         var hasPower =  (_powersState & (int)power) == (int)power;
-        GD.Print("Has power: " + power + " - " +  hasPower );
         return hasPower;
     }
 
@@ -29,7 +31,6 @@ public partial class GlobalState : Node
     {
         _powersState += (int)power;
         SetPower(power);
-        GetTree().Root.GetNode<CanvasLayer>("Game/Level/Shop").Visible = false;
     }
 
     
@@ -73,9 +74,18 @@ public partial class GlobalState : Node
     [Signal]
     public delegate void LootChangedEventHandler(string lootType, int value);
 
+    [Signal]
+    public delegate void GameoverEventHandler();
+    
     public void SwitchLevelTo(string lvl)
     {
         EmitSignal(SignalName.SwitchLevel, lvl);
+        Currentlevel = lvl;
+    }
+    
+    public void FireGameover()
+    {
+        EmitSignal(SignalName.Gameover);
     }
     
     public void SpawnLootAtPos(LootTypes lootType, Vector2 position)
@@ -117,5 +127,10 @@ public partial class GlobalState : Node
     public void UpdatePlayerHealth(int health)
     {
         EmitSignal(SignalName.PlayerHealthChanged, health);
+
+        if (health <= 0)
+        {
+            FireGameover();
+        }
     }
 }
