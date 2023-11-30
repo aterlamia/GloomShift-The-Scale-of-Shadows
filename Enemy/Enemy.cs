@@ -80,7 +80,6 @@ public partial class Enemy : CharacterBody2D
 
     public void _on_attack_body_entered(Node2D body)
     {
-        GD.Print("Hit: " + body.Name);
         GetNode<GlobalState>("/root/GlobalState").PlayerWasHurt(1);
     }
 }

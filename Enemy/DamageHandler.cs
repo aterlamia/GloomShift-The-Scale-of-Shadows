@@ -10,6 +10,8 @@ public partial class DamageHandler : Node2D
     public bool IsDead => Health <= 0;
     public void Hit(int damage)
     {
+       GetNode<GpuParticles2D>("HitPart").Emitting = true;
+            
         if (Health > 0)
         {
             Health -= damage;
@@ -20,7 +22,6 @@ public partial class DamageHandler : Node2D
 
     public void Die()
     {
-        GD.Print("die ???");
         GetParent<Enemy>().GetNode<GenericPlatforformer.Enemy.StateManager>("StateManager").ChangeState(StateTypes.Die);
     }
 }

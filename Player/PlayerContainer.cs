@@ -26,6 +26,11 @@ public partial class PlayerContainer : Node2D
     private bool freeze = false;
     protected StateManager StateManager;
 
+
+    public void ShowShadow(bool show)
+    {
+        _shadow.Visible = show;
+    }
     public override void _Ready()
     {
         _globalState = GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState");

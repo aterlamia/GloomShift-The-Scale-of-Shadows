@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://cggbckprr8pns"]
+[gd_scene load_steps=45 format=3 uid="uid://cggbckprr8pns"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_frf4s"]
 [ext_resource type="Texture2D" uid="uid://dapymy4n5yawd" path="res://assets/Player/attack.png" id="2_65bcy"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cid57fp0cto8k" path="res://assets/Player/irun.png" id="8_08l2l"]
 [ext_resource type="FontFile" uid="uid://b2klgsihxep0b" path="res://assets/fonts/PixelColeco-4vJW.ttf" id="9_32huo"]
 [ext_resource type="AudioStream" uid="uid://bo4cq4cfch45m" path="res://assets/sounds/hit.wav" id="10_nftpy"]
+[ext_resource type="Texture2D" uid="uid://flw35mc2j5de" path="res://assets/Player/assistedjump.png" id="10_qigs6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eqicq"]
 height = 56.0
@@ -97,6 +98,64 @@ tracks/4/keys = {
 "values": [{
 "args": [1],
 "method": &"ChangeState"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_c8gmi"]
+resource_name = "double_jump_start"
+length = 0.6
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_qigs6")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [false],
+"method": &"ShowShadow"
+}, {
+"args": [true],
+"method": &"ShowShadow"
 }]
 }
 
@@ -312,6 +371,7 @@ tracks/2/keys = {
 _data = {
 "RESET": SubResource("Animation_tqm2y"),
 "attack": SubResource("Animation_63awi"),
+"double_jump_start": SubResource("Animation_c8gmi"),
 "falling": SubResource("Animation_xa5pd"),
 "idle": SubResource("Animation_sxuf2"),
 "jump_start": SubResource("Animation_hyxqm"),
@@ -323,7 +383,7 @@ _data = {
 animation = &"attack"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_h6tp1"]
-animation = &"jump_start"
+animation = &"double_jump_start"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wji0s"]
 animation = &"falling"
@@ -379,7 +439,7 @@ states/Start/position = Vector2(214.667, 190.222)
 states/attack/node = SubResource("AnimationNodeAnimation_gnrod")
 states/attack/position = Vector2(693.333, 189.926)
 states/double_jump/node = SubResource("AnimationNodeAnimation_h6tp1")
-states/double_jump/position = Vector2(503.333, -150.333)
+states/double_jump/position = Vector2(502.889, -150.333)
 states/falling/node = SubResource("AnimationNodeAnimation_wji0s")
 states/falling/position = Vector2(671, -28.4444)
 states/jump_start/node = SubResource("AnimationNodeAnimation_vjael")
@@ -389,7 +449,7 @@ states/land/position = Vector2(821.667, -28.4074)
 states/move/node = SubResource("AnimationNodeBlendSpace1D_3e7oo")
 states/move/position = Vector2(478.667, 189.333)
 transitions = ["Start", "move", SubResource("AnimationNodeStateMachineTransition_0t4rb"), "move", "jump_start", SubResource("AnimationNodeStateMachineTransition_vfjb6"), "jump_start", "falling", SubResource("AnimationNodeStateMachineTransition_g5127"), "falling", "land", SubResource("AnimationNodeStateMachineTransition_n74dx"), "move", "falling", SubResource("AnimationNodeStateMachineTransition_x4m33"), "jump_start", "double_jump", SubResource("AnimationNodeStateMachineTransition_6bos8"), "double_jump", "falling", SubResource("AnimationNodeStateMachineTransition_n16cn"), "land", "move", SubResource("AnimationNodeStateMachineTransition_i5ndl"), "move", "attack", SubResource("AnimationNodeStateMachineTransition_yye84"), "attack", "move", SubResource("AnimationNodeStateMachineTransition_k3lhw")]
-graph_offset = Vector2(-245, -133)
+graph_offset = Vector2(-120, -271)
 
 [sub_resource type="Theme" id="Theme_h4u1i"]
 
@@ -416,7 +476,6 @@ position_smoothing_speed = 10.0
 position = Vector2(26, 0)
 collision_layer = 4
 collision_mask = 4
-monitoring = false
 script = ExtResource("2_jw025")
 
 [node name="AttackHitPoint" type="CollisionShape2D" parent="Sword"]

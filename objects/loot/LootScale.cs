@@ -6,7 +6,6 @@ public partial class LootScale : Node2D
 {
     private void _on_pickup_body_entered(Node2D body)
     {
-        GD.Print("Hit: " + body.Name);
         if (body is Player)
         {
             GetNode<GlobalState>("/root/GlobalState").PickupLoot(LootTypes.Scale, 1);

@@ -73,10 +73,5 @@ public partial class Light : Node2D
 
     private void _on_lightray_area_entered(Area2D body)
     {
-        GD.Print("Hoeeeee");
-        // if (body is Shadow)
-        // {
-        // 	GetNode<LightRay>("LightRay").LightOn();
-        // }
     }
 }

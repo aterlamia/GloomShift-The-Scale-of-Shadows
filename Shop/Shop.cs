@@ -16,7 +16,6 @@ public partial class Shop : Control
 
     private void close(int power)
     {
-        GD.Print("tetet");
         GetParent<CanvasLayer>().Visible = false;
     }
 
@@ -46,7 +45,6 @@ public partial class Shop : Control
 
     public void checkBuyable()
     {
-        GD.Print("cherl");
         GetNode<TextureButton>(
                     "NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel/AspectRatioContainer/SeperateButton")
                 .Disabled =
@@ -56,8 +54,6 @@ public partial class Shop : Control
                 .Disabled =
             true;
         
-        GD.Print(_globalState.Scales);
-        GD.Print(!_globalState.HasPower(Powers.SeperareShadow));
         if (_globalState.Scales > 0 && !_globalState.HasPower(Powers.SeperareShadow))
         {
             GetNode<TextureButton>(

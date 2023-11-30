@@ -24,6 +24,11 @@ public partial class Player : CharacterBody2D
 		return Direction;
 	}
 
+	public void ShowShadow(bool show)
+	{
+		GetParent<PlayerContainer>().ShowShadow(show);
+	}
+	
 	public override void _Ready()
 	{
 		_globalState = GetNode<GenericPlatforformer.GlobalState>("/root/GlobalState");
@@ -79,6 +84,10 @@ public partial class Player : CharacterBody2D
 		AnimationTree.Set("parameters/move/blend_position", Direction.X);
 	}
 
+	public Vector2 LookingDirection()
+	{
+		return new Vector2(Sprite.FlipH == true ? -1 : 1,0 );
+	}
 	protected void ChangeDir()
 	{
 		if (Direction.X < 0)

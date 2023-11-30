@@ -30,7 +30,6 @@ public partial class Vendor : Node2D
 
 	private void _on_area_2d_area_entered(Node2D node2D)
 	{
-		GD.Print(node2D.Name);
 		if (node2D.Name == "LightDetector")
 		{
 			_vendorActive = true;
@@ -48,10 +47,8 @@ public partial class Vendor : Node2D
 	public override void _Input(InputEvent @event)
 	{
 		
-		GD.Print("active" + _vendorActive);
 		if (@event.IsActionPressed("activate") && _vendorActive)
 		{
-			GD.Print("tetet2343");
 			GetParent().GetNode<CanvasLayer>("Shop").Visible = true;
 			GetParent().GetNode<Shop>("Shop/Shop").checkBuyable();
 		}

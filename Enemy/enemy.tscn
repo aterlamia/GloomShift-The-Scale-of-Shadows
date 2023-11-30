@@ -1,9 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://c8fce55820o2l"]
+[gd_scene load_steps=42 format=3 uid="uid://c8fce55820o2l"]
 
 [ext_resource type="Script" path="res://Enemy/Enemy.cs" id="1_0uixg"]
 [ext_resource type="Script" path="res://Enemy/DamageHandler.cs" id="2_1fpfo"]
 [ext_resource type="Texture2D" uid="uid://c3oh2q0kavbqe" path="res://assets/enemy/enemywalk.png" id="3_0g6sh"]
 [ext_resource type="Texture2D" uid="uid://dfrng3m8xnavm" path="res://assets/enemy/enemyidle.png" id="3_fxrsk"]
+[ext_resource type="Texture2D" uid="uid://c65b4u0xgk8hx" path="res://assets/particle.png" id="3_g4tfg"]
 [ext_resource type="Texture2D" uid="uid://vr3q6qak8mhj" path="res://assets/enemy/enemyhitk.png" id="3_gunfx"]
 [ext_resource type="Texture2D" uid="uid://fosln8bndj3y" path="res://assets/enemy/enemydeath.png" id="3_v4hwo"]
 [ext_resource type="Texture2D" uid="uid://cx8cddhrwj4pq" path="res://assets/enemy/enemyattack.png" id="6_4edp7"]
@@ -15,6 +16,43 @@ size = Vector2(31, 46)
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_naoge"]
 radius = 16.0
 height = 48.0
+
+[sub_resource type="Gradient" id="Gradient_ih4rs"]
+colors = PackedColorArray(0.862745, 0.219608, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_01wch"]
+gradient = SubResource("Gradient_ih4rs")
+
+[sub_resource type="Curve" id="Curve_h4qqw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.298817, 0.441516), 0.0, 0.0, 0, 0, Vector2(0.482249, 0.854513), 0.0, 0.0, 0, 0, Vector2(0.713018, 0.525993), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_bnbri"]
+curve = SubResource("Curve_h4qqw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m26ip"]
+lifetime_randomness = 0.56
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(1, 23, 0)
+spread = 180.0
+initial_velocity_min = 1.0
+initial_velocity_max = 70.0
+angular_velocity_min = 180.0
+angular_velocity_max = 180.0
+radial_velocity_min = 4.0
+radial_velocity_max = 4.0
+gravity = Vector3(0, 89.2, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_bnbri")
+color = Color(0.690196, 0.247059, 0.0627451, 1)
+color_ramp = SubResource("GradientTexture1D_01wch")
+hue_variation_min = 0.1
+hue_variation_max = 0.1
+turbulence_noise_strength = 6.3
+collision_mode = 2
+collision_use_scale = true
 
 [sub_resource type="Animation" id="Animation_kk0d6"]
 length = 0.001
@@ -387,6 +425,20 @@ shape = SubResource("CapsuleShape2D_naoge")
 
 [node name="DamageHandler" type="Node2D" parent="."]
 script = ExtResource("2_1fpfo")
+
+[node name="HitPart" type="GPUParticles2D" parent="DamageHandler"]
+z_index = 200
+position = Vector2(4, -14)
+emitting = false
+amount = 10
+process_material = SubResource("ParticleProcessMaterial_m26ip")
+texture = ExtResource("3_g4tfg")
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+randomness = 0.92
+trail_enabled = true
+trail_lifetime = 0.59
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
 position = Vector2(1, -10)

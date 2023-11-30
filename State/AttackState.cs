@@ -15,7 +15,8 @@ public class AttackState : State
 
 	public override void ProcessState(double delta)
 	{
-		
+		_player.Velocity = _player.Velocity + -_player.LookingDirection() ;
+
 	}
 
 	public override void Enter()

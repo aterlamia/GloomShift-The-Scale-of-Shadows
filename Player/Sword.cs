@@ -7,14 +7,11 @@ public partial class Sword : Area2D
     {
         if (body.HasNode("DamageHandler"))
         {
-            GD.Print("hit enemy");
             body.GetNode<DamageHandler>("DamageHandler").Hit(5);
         }
         else
         {
-            GD.Print("hit wall");
         }
 
-        GD.Print(body.Name);
     }
 }

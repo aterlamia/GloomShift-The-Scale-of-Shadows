@@ -295,6 +295,17 @@ position = Vector2(481, 59)
 [node name="Lamp" parent="Lights" instance=ExtResource("12_il452")]
 position = Vector2(982, 209)
 
+[node name="enemies" type="Node2D" parent="."]
+
+[node name="Enemy2" parent="enemies" instance=ExtResource("16_bnkjq")]
+position = Vector2(4563, -251)
+
+[node name="Enemy" parent="enemies" instance=ExtResource("16_bnkjq")]
+position = Vector2(2960, 272)
+
+[node name="Enemy3" parent="enemies" instance=ExtResource("16_bnkjq")]
+position = Vector2(4731, 70)
+
 [node name="PlayerContainer" type="Node2D" parent="."]
 position = Vector2(-388, -10)
 script = ExtResource("13_kddpm")
@@ -313,9 +324,6 @@ libraries = {
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerContainer"]
 script = ExtResource("16_fmaga")
-
-[node name="Enemy" parent="." instance=ExtResource("16_bnkjq")]
-position = Vector2(2960, 272)
 
 [node name="LootSpawner" type="Node2D" parent="."]
 script = ExtResource("17_8l6bq")
@@ -374,12 +382,6 @@ position = Vector2(3463, 204)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Respawns/firstJump"]
 position = Vector2(0, -81.5)
 shape = SubResource("RectangleShape2D_nmbfl")
-
-[node name="Enemy2" parent="." instance=ExtResource("16_bnkjq")]
-position = Vector2(4563, -251)
-
-[node name="Enemy3" parent="." instance=ExtResource("16_bnkjq")]
-position = Vector2(4731, 70)
 
 [node name="Lever" parent="." instance=ExtResource("26_uy8ed")]
 position = Vector2(4831, 100)

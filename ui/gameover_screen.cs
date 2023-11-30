@@ -15,7 +15,6 @@ public partial class gameover_screen : Control
 
 	private void gameover()
 	{
-		GD.Print("gamoverscree");
 		Visible = true;
 	}
 

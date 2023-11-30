@@ -22,11 +22,9 @@ public partial class StateManager : Node
 	
 	public void CheckHealthAndSwitch()
 	{
-		GD.Print("checking health");
 		var damageHandler = _enemy.GetNode<DamageHandler>("DamageHandler");
 		if (damageHandler.Health <= 0)
 		{
-			GD.Print("checking health he's dead jim");
 			damageHandler.Die();
 		}
 		else
@@ -55,10 +53,8 @@ public partial class StateManager : Node
 				stateName = "die";
 				break;
 			default:
-				GD.Print("Unknown state type");
 				break;
 		}
-		GD.Print("Changing state" + state.ToString() + " to " + stateName );
 		if (CurrentState != null)
 		{
 			CurrentState.NextState = null;
