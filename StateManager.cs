@@ -63,7 +63,7 @@ public partial class StateManager : Node
         _playback = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
 
         AvailableStates.Add("ground", new GroundState(_player, _playback, _sound, true));
-        AvailableStates.Add("air", new AirState(_player, _playback, _sound, true));
+        AvailableStates.Add("air", new AirState(_player, _playback, _sound, true, _globalState));
         AvailableStates.Add("attack", new AttackState(_player, _playback, _sound, false, 5.0f));
         AvailableStates.Add("dialog", new DialogState(_player, _playback, _sound, false, _globalState));
 

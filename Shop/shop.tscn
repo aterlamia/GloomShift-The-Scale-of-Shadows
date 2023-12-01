@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bcqgfgumacb6e"]
+[gd_scene load_steps=12 format=3 uid="uid://bcqgfgumacb6e"]
 
 [ext_resource type="Script" path="res://Shop/Shop.cs" id="1_6r615"]
 [ext_resource type="Texture2D" uid="uid://btasogs7rfngl" path="res://assets/ui/Panel.png" id="1_kvwx6"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cd0208k0nqv30" path="res://assets/ui/empty.png" id="4_ard4r"]
 [ext_resource type="Texture2D" uid="uid://dthhx3sea0ktg" path="res://assets/ui/losedis.png" id="4_utuuy"]
 [ext_resource type="Texture2D" uid="uid://dfvr2hxflj4td" path="res://assets/ui/schrinkedis.png" id="6_h63le"]
+[ext_resource type="Texture2D" uid="uid://djurcs3oiuecw" path="res://assets/ui/double.png" id="7_letpc"]
+[ext_resource type="Texture2D" uid="uid://dj1tk1vvic3bb" path="res://assets/ui/doublshrinke.png" id="8_ewv80"]
 [ext_resource type="FontFile" uid="uid://b2klgsihxep0b" path="res://assets/fonts/PixelColeco-4vJW.ttf" id="8_l2pf3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kf80q"]
@@ -100,7 +102,6 @@ scale = Vector2(0.46, 0.46)
 
 [node name="SeperateButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel/AspectRatioContainer"]
 layout_mode = 2
-disabled = true
 texture_normal = ExtResource("2_b54p8")
 texture_disabled = ExtResource("4_utuuy")
 
@@ -125,33 +126,32 @@ scale = Vector2(0.46, 0.46)
 
 [node name="ShrinkButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Shrink/Panel/AspectRatioContainer2"]
 layout_mode = 2
-disabled = true
 texture_normal = ExtResource("3_ecgmb")
 texture_disabled = ExtResource("6_h63le")
 
-[node name="Empty" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
+[node name="Double" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty"]
+[node name="Panel" type="Panel" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Double"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty/Panel"]
+[node name="AspectRatioContainer2" type="AspectRatioContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Double/Panel"]
 layout_mode = 1
 offset_right = 64.0
 offset_bottom = 64.0
 scale = Vector2(0.46, 0.46)
 
-[node name="TextureButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Empty/Panel/AspectRatioContainer2"]
+[node name="DoubleButton" type="TextureButton" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Double/Panel/AspectRatioContainer2"]
 layout_mode = 2
-disabled = true
-texture_normal = ExtResource("4_ard4r")
+texture_normal = ExtResource("7_letpc")
+texture_disabled = ExtResource("8_ewv80")
 
 [node name="Empty2" type="MarginContainer" parent="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer"]
 layout_mode = 2
@@ -456,5 +456,6 @@ text = "X"
 
 [connection signal="pressed" from="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Sepperate/Panel/AspectRatioContainer/SeperateButton" to="Shop" method="_on_SolidShadow_pressed"]
 [connection signal="pressed" from="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Shrink/Panel/AspectRatioContainer2/ShrinkButton" to="Shop" method="_on_shrink_button_pressed"]
+[connection signal="pressed" from="Shop/NinePatchRect/MarginContainer/HSplitContainer/VSplitContainer/GridContainer/Double/Panel/AspectRatioContainer2/DoubleButton" to="Shop" method="_on_double_button_pressed"]
 [connection signal="pressed" from="Shop/NinePatchRect/MarginContainer/HSplitContainer/AspectRatioContainer/Panel/MarginContainer/Sidebar/MarginContainer/BuyButton" to="Shop" method="_on_buy_button_pressed"]
 [connection signal="pressed" from="Shop/NinePatchRect/Button" to="Shop" method="_on_button_pressed"]

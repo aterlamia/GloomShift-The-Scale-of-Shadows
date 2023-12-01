@@ -13,10 +13,11 @@ public partial class Enemy : CharacterBody2D
     private float jumpForce = -590.0f; // Adjust to control the jump strength
     protected AnimationTree AnimationTree;
     private float Speed = 300.0f; // Adjust to control the jump strength
-    private Sprite2D Sprite;
+    protected Sprite2D Sprite;
 
     // Attack variables
 
+    public int type = 1;
     public Vector2 Direction = Vector2.Zero;
     private bool _isAttacking = false;
 
@@ -65,16 +66,28 @@ public partial class Enemy : CharacterBody2D
 
     public void ChangeDir()
     {
-        var attackCol = GetNode<Area2D>("Attack");
         if (Direction.X < 0)
         {
             Sprite.FlipH = true;
+        }
+        else if (Direction.X > 0)
+        {
+            Sprite.FlipH = false;
+        }
+        
+        // ugly hack make it better later
+        if (!HasNode("Attack"))
+        {
+            return;
+        }
+        var attackCol = GetNode<Area2D>("Attack");
+        if (Direction.X < 0)
+        {
             attackCol.Position = new Vector2(-MathF.Abs(attackCol.Position.X), attackCol.Position.Y);
         }
         else if (Direction.X > 0)
         {
             attackCol.Position = new Vector2(MathF.Abs(attackCol.Position.X), attackCol.Position.Y);
-            Sprite.FlipH = false;
         }
     }
 

@@ -1,3 +1,4 @@
+using GenericPlatforformer.Shop;
 using Godot;
 
 namespace GenericPlatforformer.State;
@@ -6,11 +7,13 @@ public class AirState : State
 {
     private readonly float _jumpForce = -350.0f;
     private bool _hasDoubleJumped = false;
+    private readonly GlobalState _globalState;
 
-    public AirState(Player player, AnimationNodeStateMachinePlayback playback, AudioStreamPlayer2D sound, bool canMove)
+    public AirState(Player player, AnimationNodeStateMachinePlayback playback, AudioStreamPlayer2D sound, bool canMove, GlobalState globalState)
         : base(player, playback, sound,
             canMove)
     {
+     _globalState = globalState;   
     }
 
     public override void ProcessState(double delta)
@@ -32,7 +35,7 @@ public class AirState : State
 
     public override void InputState(InputEvent @event)
     {
-        if (!Input.IsActionJustPressed("jump") || _hasDoubleJumped) return;
+        if (!Input.IsActionJustPressed("jump") || _hasDoubleJumped || !_globalState.HasPower(Powers.DualJump)) return;
 
         _player.Velocity = new Vector2(_player.Velocity.X, _jumpForce);
         _hasDoubleJumped = true;

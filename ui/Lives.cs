@@ -28,14 +28,14 @@ public partial class Lives : Control
 
 	private void UpdateHealth(int health)
 	{
-		for (int i = 0; i < _maxLives/2; i++)
+		for (int i = 1; i <= _maxLives/2; i++)
 		{
-			if(health < i * 2)
-				_hearths[i].SetEmptyHearth();
-			else if (health == i * 2)
-				_hearths[i].SetHalfHearth();
+			if(health ==  i * 2 - 1)
+				_hearths[i-1].SetHalfHearth();
+			else if (health <= i * 2 - 2) 
+				_hearths[i-1].SetEmptyHearth();
 			else
-				_hearths[i].SetFullHearth();
+				_hearths[i-1].SetFullHearth();
 		}
 	}
 

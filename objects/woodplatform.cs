@@ -18,7 +18,12 @@ public partial class woodplatform : AnimatableBody2D
 		}
 
 	}
-	
+
+	private void _switchOn()
+	{
+		_moving = true;
+		StartMovement();
+	}
 	private void StartMovement()
 	{
 		GD.Print(_endPos);

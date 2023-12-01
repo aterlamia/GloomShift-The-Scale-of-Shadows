@@ -6,7 +6,7 @@ public partial class World : Node2D
 {
 	//ADD dictionary for all the levels
 	[Export]
-	public string LevelName = "level1";
+	public string LevelName = "level3";
 	// Called when the node enters the scene tree for the first time.
 	private GlobalState _globalState = null;
 

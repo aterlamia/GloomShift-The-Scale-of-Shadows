@@ -7,5 +7,6 @@ public enum StateTypes
     Attack,
     Hit,
     Die,
-    Dialog
+    Dialog,
+    Prepare
 }

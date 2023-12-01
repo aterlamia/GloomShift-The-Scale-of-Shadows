@@ -27,6 +27,6 @@ public class AttackState : EnemyState
 
     public override void Exit()
     {
-        _playback.Travel("move");
+        _playback.Travel("ground");
     }
 }

@@ -114,8 +114,16 @@ public partial class lampwall_ : Node2D
 
 	private void CreateShadow()
 	{
+		if (!HasNode("Shadow"))
+		{
+			return;
+		}
 		var shadow = GetNode<Polygon2D>("Shadow");
 
+		if (shadow == null)
+		{
+			return;
+		}
 		shadow.Polygon = new Vector2[]
 		{
 			new Vector2((_shadowWidthTop / 2) * -1 , _shadowStart),
@@ -136,6 +144,10 @@ public partial class lampwall_ : Node2D
 
 	private void createLight()
 	{
+		if(!HasNode("LightShape"))
+		{
+			return;
+		}
 		var lightEdge = GetNode<Polygon2D>("LightShape");
 		lightEdge.Polygon = new Vector2[]
 		{
